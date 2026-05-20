@@ -420,6 +420,79 @@
       font-size: 13px;
     }
 
+    .data-table-wrap {
+      width: 100%;
+      overflow: auto;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background: white;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+      font-size: 13px;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 13px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    .data-table th {
+      background: #f8fafc;
+      color: #475569;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .data-table tr:hover td {
+      background: #f8fbff;
+    }
+
+    .data-toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .data-toolbar .search {
+      min-width: 220px;
+      box-shadow: none;
+    }
+
+    .mini-kpi {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mini-kpi span {
+      padding: 9px 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      color: #334155;
+    }
+
+    .money {
+      font-weight: 900;
+      color: var(--primary-dark);
+      white-space: nowrap;
+    }
+
     .room-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1133,6 +1206,9 @@
         <button data-section="tasks"><span class="nav-icon">✅</span><span class="label-text">Tugas</span></button>
         <button data-section="meetings"><span class="nav-icon">🎙️</span><span class="label-text">Meeting</span></button>
         <button data-section="documents"><span class="nav-icon">📁</span><span class="label-text">Dokumen</span></button>
+        <button data-section="customers"><span class="nav-icon">🏢</span><span class="label-text">Customer</span></button>
+        <button data-section="vendors"><span class="nav-icon">🏭</span><span class="label-text">Vendor</span></button>
+        <button data-section="projectsdb"><span class="nav-icon">📦</span><span class="label-text">Project Database</span></button>
         <button data-section="hrd"><span class="nav-icon">👥</span><span class="label-text">HRD</span></button>
         <button data-section="finance"><span class="nav-icon">💰</span><span class="label-text">Finance</span></button>
         <button data-section="sales"><span class="nav-icon">📣</span><span class="label-text">Sales / CRM</span></button>
@@ -1179,7 +1255,7 @@
             </div>
             <div class="building-card">
               <strong>Gedung Kantor Digital</strong>
-              <p style="font-size:13px; margin:6px 0 0; color:#dbeafe;">12 ruangan aktif, 28 staf online, 6 meeting terjadwal.</p>
+              <p style="font-size:13px; margin:6px 0 0; color:#dbeafe;">12 ruangan aktif, 30 karyawan, 10 customer, 10 vendor, 20 proyek berjalan.</p>
               <div class="building">
                 <div class="window on">👔</div><div class="window on">💰</div><div class="window">📁</div><div class="window on">📣</div>
                 <div class="window">👥</div><div class="window on">🧾</div><div class="window on">✅</div><div class="window">☕</div>
@@ -1192,8 +1268,8 @@
         <div class="grid">
           <div class="card stat-card span-3">
             <div class="stat-top"><h4>Hadir Hari Ini</h4><div class="stat-icon">👥</div></div>
-            <strong>28</strong>
-            <p>4 izin, 2 belum absen</p>
+            <strong>30</strong>
+            <p>24 hadir, 4 izin, 2 belum absen</p>
           </div>
           <div class="card stat-card span-3">
             <div class="stat-top"><h4>Tugas Aktif</h4><div class="stat-icon">✅</div></div>
@@ -1445,18 +1521,82 @@
         </div>
       </section>
 
+      <section id="customers" class="page-section hidden">
+        <div class="grid">
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Total Customer</h4><div class="stat-icon">🏢</div></div><strong>10</strong><p>8 aktif, 2 onboarding</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Kontrak Aktif</h4><div class="stat-icon">💼</div></div><strong>274Jt</strong><p>Nilai kontrak tahunan</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Renewal Dekat</h4><div class="stat-icon">🔔</div></div><strong>3</strong><p>Perlu follow up sales</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Customer Corporate</h4><div class="stat-icon">🏦</div></div><strong>4</strong><p>Paket Business & Corporate</p></div>
+          <div class="card span-12">
+            <div class="data-toolbar">
+              <div><h3>Data Customer Riil Contoh</h3><span style="color:var(--muted);font-size:13px;">Data ini contoh untuk presentasi produk, bukan data asli pelanggan.</span></div>
+              <div class="mini-kpi"><span>ARR Rp 274.000.000</span><span>MRR Rp 22.833.000</span><span>CSAT 94%</span></div>
+            </div>
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Kode</th><th>Customer</th><th>Industri</th><th>Kota</th><th>Kontak</th><th>Paket</th><th>Status</th><th>Nilai Kontrak</th><th>Renewal</th></tr></thead>
+                <tbody id="customersTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="vendors" class="page-section hidden">
+        <div class="grid">
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Total Vendor</h4><div class="stat-icon">🏭</div></div><strong>10</strong><p>7 aktif, 3 standby</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Tagihan Bulan Ini</h4><div class="stat-icon">🧾</div></div><strong>38Jt</strong><p>5 invoice belum jatuh tempo</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>SLA Bagus</h4><div class="stat-icon">⭐</div></div><strong>92%</strong><p>Rata-rata performa vendor</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Kontrak Aktif</h4><div class="stat-icon">📄</div></div><strong>8</strong><p>2 perlu review legal</p></div>
+          <div class="card span-12">
+            <div class="data-toolbar">
+              <div><h3>Data Vendor Operasional</h3><span style="color:var(--muted);font-size:13px;">Vendor untuk cloud, legal, marketing, desain, payment, support, dan operasional kantor.</span></div>
+              <button class="btn btn-primary" onclick="openModal('vendor')">+ Vendor</button>
+            </div>
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Kode</th><th>Vendor</th><th>Kategori</th><th>PIC</th><th>Kontak</th><th>SLA</th><th>Status</th><th>Tagihan/Bulan</th><th>Kontrak</th></tr></thead>
+                <tbody id="vendorsTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projectsdb" class="page-section hidden">
+        <div class="grid">
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Total Proyek</h4><div class="stat-icon">📦</div></div><strong>20</strong><p>14 berjalan, 4 selesai, 2 risiko</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Nilai Proyek</h4><div class="stat-icon">💰</div></div><strong>612Jt</strong><p>Gabungan kontrak proyek</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Progress Rata-rata</h4><div class="stat-icon">📈</div></div><strong>63%</strong><p>Rata-rata semua proyek</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Overdue</h4><div class="stat-icon">⚠️</div></div><strong>2</strong><p>Butuh eskalasi owner</p></div>
+          <div class="card span-12">
+            <div class="data-toolbar">
+              <div><h3>20 Project Berjalan</h3><span style="color:var(--muted);font-size:13px;">Data contoh seolah riil untuk demo ke calon pelanggan/investor.</span></div>
+              <button class="btn btn-primary" onclick="openModal('project')">+ Project</button>
+            </div>
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Kode</th><th>Project</th><th>Customer</th><th>PIC</th><th>Tim</th><th>Status</th><th>Progress</th><th>Nilai</th><th>Deadline</th></tr></thead>
+                <tbody id="projectsTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="hrd" class="page-section hidden">
         <div class="grid">
-          <div class="card stat-card span-3"><div class="stat-top"><h4>Total Karyawan</h4><div class="stat-icon">👥</div></div><strong>34</strong><p>28 aktif hari ini</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Total Karyawan</h4><div class="stat-icon">👥</div></div><strong>30</strong><p>24 hadir hari ini</p></div>
           <div class="card stat-card span-3"><div class="stat-top"><h4>Izin / Cuti</h4><div class="stat-icon">📝</div></div><strong>6</strong><p>3 menunggu approval</p></div>
           <div class="card stat-card span-3"><div class="stat-top"><h4>Terlambat</h4><div class="stat-icon">⏰</div></div><strong>2</strong><p>Perlu catatan HRD</p></div>
           <div class="card stat-card span-3"><div class="stat-top"><h4>Evaluasi</h4><div class="stat-icon">⭐</div></div><strong>12</strong><p>Review performa bulan ini</p></div>
           <div class="card span-7">
             <div class="section-head"><div><h3>Data Karyawan</h3><span>Kelola user internal dan status kerja</span></div><button class="btn btn-primary" onclick="openModal('employee')">+ Karyawan</button></div>
-            <div class="staff-list">
-              <div class="staff"><div class="avatar">AS</div><div class="staff-body"><div class="staff-name">Andi Saputra <span class="label green">Aktif</span></div><div class="staff-meta">Finance · full time · hadir 08:02</div></div><button class="btn">Detail</button></div>
-              <div class="staff"><div class="avatar">RM</div><div class="staff-body"><div class="staff-name">Rina Marlina <span class="label blue">Sales</span></div><div class="staff-meta">Sales · target bulan ini 74%</div></div><button class="btn">Detail</button></div>
-              <div class="staff"><div class="avatar">DP</div><div class="staff-body"><div class="staff-name">Dedi Pratama <span class="label orange">Izin</span></div><div class="staff-meta">Operasional · izin setengah hari</div></div><button class="btn">Detail</button></div>
+            <div class="data-table-wrap">
+              <table class="data-table" style="min-width:760px;">
+                <thead><tr><th>NIK</th><th>Nama</th><th>Divisi</th><th>Jabatan</th><th>Status</th><th>Jam Masuk</th></tr></thead>
+                <tbody id="employeesTable"></tbody>
+              </table>
             </div>
           </div>
           <div class="card span-5">
@@ -1605,6 +1745,9 @@
       tasks: ['Board Tugas', 'Kelola pekerjaan tim dari to do, progress, sampai selesai.'],
       meetings: ['Ruang Meeting', 'Jadwal rapat, link meeting, notulen, dan action point.'],
       documents: ['Ruang Arsip', 'Simpan dokumen kantor, surat, SOP, invoice, dan kontrak.'],
+      customers: ['Customer Database', '10 contoh customer aktif dengan data bisnis, kontak, paket, dan nilai kontrak.'],
+      vendors: ['Vendor Database', '10 contoh vendor aktif untuk operasional, server, legal, marketing, dan support.'],
+      projectsdb: ['Project Database', '20 contoh proyek berjalan lengkap dengan PIC, customer, nilai, deadline, dan progress.'],
       hrd: ['HRD', 'Absensi, data karyawan, izin, cuti, lembur, dan evaluasi tim.'],
       finance: ['Finance', 'Invoice, kas masuk, kas keluar, tagihan, dan laporan keuangan.'],
       sales: ['Sales / CRM', 'Kelola prospek, pipeline, follow up, penawaran, dan pelanggan.'],
@@ -1900,6 +2043,36 @@
         `;
       }
 
+      if (type === 'vendor') {
+        modalTitle.textContent = 'Tambah Vendor';
+        modalDesc.textContent = 'Input vendor operasional, legal, cloud, marketing, payment, atau support.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Nama vendor" />
+            <input class="input" placeholder="Kategori vendor" />
+            <input class="input" placeholder="PIC / kontak vendor" />
+            <input class="input" placeholder="Estimasi tagihan bulanan" />
+            <button class="btn btn-primary" onclick="showToast('Vendor baru disimpan ke database vendor.'); hideModal();">Simpan Vendor</button>
+          </div>
+        `;
+      }
+
+      if (type === 'project') {
+        modalTitle.textContent = 'Tambah Project';
+        modalDesc.textContent = 'Buat project baru lengkap dengan customer, PIC, tim, nilai, dan deadline.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Nama project" />
+            <input class="input" placeholder="Customer" />
+            <input class="input" placeholder="PIC Project" />
+            <input class="input" placeholder="Nilai project" />
+            <input class="input" type="date" />
+            <textarea class="textarea" placeholder="Scope pekerjaan..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Project baru disimpan ke database project.'); hideModal();">Simpan Project</button>
+          </div>
+        `;
+      }
+
       document.getElementById('modalBackdrop').style.display = 'flex';
     }
 
@@ -2034,6 +2207,90 @@
         showToast('Share screen dibatalkan atau tidak diizinkan.');
       }
     }
+
+    const sampleCustomers = [
+      ['CUST-001','PT Maju Bersama Teknologi','IT Services','Jakarta','Dimas Pratama · 0812-4400-1001','Corporate','Aktif','Rp 48.000.000','20 Jun 2026'],
+      ['CUST-002','CV Sinar Teknik Mandiri','Trading Teknik','Bandung','Ratna Sari · 0813-2211-8820','Business','Aktif','Rp 24.000.000','12 Jul 2026'],
+      ['CUST-003','Bengkel AC Prima Jaya','Service AC','Tangerang','Hendra Wijaya · 0851-5097-3789','Starter','Onboarding','Rp 6.000.000','01 Agu 2026'],
+      ['CUST-004','PT Nusantara Virtual Office','Virtual Office','Jakarta Selatan','Laras Putri · 0821-7000-2345','Virtual Office','Aktif','Rp 36.000.000','30 Mei 2026'],
+      ['CUST-005','Koperasi Karyawan Sejahtera','Keuangan','Bekasi','Arman Hakim · 0819-3344-5566','Business','Aktif','Rp 18.000.000','18 Sep 2026'],
+      ['CUST-006','PT Global Distribusi Sentosa','Distribusi','Surabaya','Maya Kartika · 0822-1111-9090','Corporate','Aktif','Rp 60.000.000','05 Okt 2026'],
+      ['CUST-007','Klinik Medika Utama','Healthcare','Depok','dr. Aditya · 0812-9988-7766','Business','Aktif','Rp 21.000.000','14 Nov 2026'],
+      ['CUST-008','PT Karya Logistik Indonesia','Logistik','Semarang','Yusuf Maulana · 0857-9000-1200','Corporate','Aktif','Rp 54.000.000','03 Des 2026'],
+      ['CUST-009','Agensi Kreatif Orbitama','Agency','Bogor','Nabila Rahma · 0813-6600-7001','Starter','Trial','Rp 5.000.000','25 Mei 2026'],
+      ['CUST-010','PT Indo Pabrik Presisi','Manufaktur','Karawang','Budi Santoso · 0821-3344-1000','Corporate','Onboarding','Rp 42.000.000','11 Jan 2027']
+    ];
+
+    const sampleVendors = [
+      ['VND-001','Cloud Prima Indonesia','Server & Hosting','Fajar Nugroho','support@cloudprima.id','99.5%','Aktif','Rp 4.500.000','Tahunan'],
+      ['VND-002','Legalindo Partner','Legal & Kontrak','Rizky Adnan','legal@legalindo.co.id','95%','Aktif','Rp 3.000.000','Per Case'],
+      ['VND-003','Kreasi Media Ads','Digital Marketing','Salsa Amelia','ads@kreasimedia.id','90%','Aktif','Rp 8.000.000','Bulanan'],
+      ['VND-004','Nusa Payment Gateway','Payment','Toni Hidayat','merchant@nusapay.id','98%','Aktif','Rp 2.500.000','Transaksi'],
+      ['VND-005','Data Migrasi Pro','Migrasi Data','Kevin Saputra','ops@datamigrasi.id','92%','Standby','Rp 5.000.000','Project'],
+      ['VND-006','Desain UI Studio','Design Support','Mira Oktavia','hello@desainui.id','94%','Aktif','Rp 6.500.000','Bulanan'],
+      ['VND-007','Jaringan Kantor Nusantara','Internet Kantor','Agus Firmansyah','noc@jkn.net','97%','Aktif','Rp 1.750.000','Bulanan'],
+      ['VND-008','PrintPro Digital','Percetakan','Dewi Lestari','order@printpro.id','91%','Standby','Rp 1.200.000','Per Order'],
+      ['VND-009','Office Supply Center','ATK & Peralatan','Rudi Hartono','sales@osc.id','89%','Aktif','Rp 2.300.000','Bulanan'],
+      ['VND-010','Helpdesk Plus','Customer Support','Putri Anggaini','cs@helpdeskplus.id','93%','Standby','Rp 3.800.000','Bulanan']
+    ];
+
+    const sampleEmployees = [
+      ['XL-001','Kalimaya Suryaalam','Direksi','Owner / Founder','Online','08:00'],['XL-002','Nadia Sari','Product','Product Manager','Online','08:05'],['XL-003','Andi Saputra','Finance','Finance Officer','Online','08:02'],['XL-004','Rina Marlina','Sales','Sales Lead','Meeting','08:11'],['XL-005','Dedi Pratama','Operasional','Operation Staff','Izin','-'],['XL-006','Siti Rahma','HRD','HR Officer','Online','08:14'],['XL-007','Bima Wardana','Engineering','Frontend Dev','Fokus','08:22'],['XL-008','Fikri Ramadhan','Engineering','Backend Dev','Online','08:18'],['XL-009','Maya Kartika','Customer Success','CS Lead','Online','08:09'],['XL-010','Rangga Putra','Support','Support Agent','Online','08:27'],['XL-011','Yuni Astuti','Admin','Office Admin','Online','08:03'],['XL-012','Taufik Hidayat','Project','Project Leader','Online','08:15'],['XL-013','Alya Safitri','Design','UI Designer','Fokus','08:20'],['XL-014','Gilang Permana','QA','QA Tester','Online','08:26'],['XL-015','Erna Wulandari','Finance','Billing Admin','Online','08:07'],['XL-016','Joko Santoso','Sales','Account Executive','Online','08:31'],['XL-017','Laras Putri','Marketing','Content Specialist','Online','08:25'],['XL-018','Reza Fahlevi','Engineering','DevOps','Online','08:17'],['XL-019','Citra Ananda','Legal','Legal Staff','Online','08:40'],['XL-020','Wahyu Prasetyo','Project','Scrum Master','Online','08:12'],['XL-021','Dian Puspita','HRD','Recruitment','Izin','-'],['XL-022','Yoga Saputra','Support','Trainer','Online','08:33'],['XL-023','Mega Lestari','Sales','CRM Admin','Online','08:29'],['XL-024','Hadi Kurniawan','Data','Data Migration','Online','08:16'],['XL-025','Nina Amelia','Admin','Document Control','Online','08:10'],['XL-026','Bayu Nugraha','Support','Helpdesk','Online','08:35'],['XL-027','Rizal Akbar','Engineering','Mobile Dev','Online','08:24'],['XL-028','Intan Maharani','Marketing','Partnership','Meeting','08:19'],['XL-029','Farhan Maulana','Finance','Tax Admin','Belum Absen','-'],['XL-030','Putra Mahendra','Operasional','Field Coordinator','Belum Absen','-']
+    ];
+
+    const sampleProjects = [
+      ['PRJ-001','Implementasi Office OS Corporate','PT Maju Bersama Teknologi','Nadia Sari','6 orang','Berjalan','72%','Rp 48.000.000','20 Jun 2026'],
+      ['PRJ-002','Migrasi Data CRM Lama','CV Sinar Teknik Mandiri','Hadi Kurniawan','4 orang','Berjalan','55%','Rp 18.000.000','02 Jul 2026'],
+      ['PRJ-003','Setup Billing Bengkel AC','Bengkel AC Prima Jaya','Yoga Saputra','3 orang','Onboarding','38%','Rp 6.000.000','15 Jun 2026'],
+      ['PRJ-004','Portal Tenant Virtual Office','PT Nusantara Virtual Office','Taufik Hidayat','5 orang','Berjalan','81%','Rp 36.000.000','05 Jun 2026'],
+      ['PRJ-005','Dashboard Koperasi Digital','Koperasi Karyawan Sejahtera','Bima Wardana','4 orang','Selesai','100%','Rp 18.000.000','10 Mei 2026'],
+      ['PRJ-006','Multi Cabang Distribusi','PT Global Distribusi Sentosa','Wahyu Prasetyo','7 orang','Berjalan','47%','Rp 60.000.000','30 Jul 2026'],
+      ['PRJ-007','HRD Klinik Online','Klinik Medika Utama','Siti Rahma','4 orang','Berjalan','66%','Rp 21.000.000','12 Jul 2026'],
+      ['PRJ-008','Logistik Task Control','PT Karya Logistik Indonesia','Fikri Ramadhan','6 orang','Risiko','44%','Rp 54.000.000','25 Jun 2026'],
+      ['PRJ-009','Agency Project Board','Agensi Kreatif Orbitama','Alya Safitri','3 orang','Trial','25%','Rp 5.000.000','25 Mei 2026'],
+      ['PRJ-010','ERP Ringan Pabrik','PT Indo Pabrik Presisi','Reza Fahlevi','8 orang','Onboarding','19%','Rp 42.000.000','11 Agu 2026'],
+      ['PRJ-011','Integrasi WhatsApp Invoice','Internal XLifeWorks','Erna Wulandari','3 orang','Berjalan','70%','Rp 22.000.000','18 Jun 2026'],
+      ['PRJ-012','Payment Gateway SaaS','Internal XLifeWorks','Andi Saputra','4 orang','Berjalan','52%','Rp 28.000.000','01 Jul 2026'],
+      ['PRJ-013','Mobile PWA Optimization','Internal XLifeWorks','Rizal Akbar','5 orang','Berjalan','61%','Rp 32.000.000','22 Jun 2026'],
+      ['PRJ-014','Customer Support Center','Internal XLifeWorks','Maya Kartika','4 orang','Selesai','100%','Rp 16.000.000','08 Mei 2026'],
+      ['PRJ-015','Template Surat Digital','Internal XLifeWorks','Nina Amelia','2 orang','Selesai','100%','Rp 8.000.000','16 Mei 2026'],
+      ['PRJ-016','Meeting Online SFU Research','Internal XLifeWorks','Reza Fahlevi','5 orang','Risiko','33%','Rp 45.000.000','30 Jun 2026'],
+      ['PRJ-017','Onboarding Corporate Batch 1','PT Alpha Digital','Yoga Saputra','4 orang','Berjalan','76%','Rp 24.000.000','07 Jun 2026'],
+      ['PRJ-018','Training Admin Customer','Tenant VO Jakarta','Maya Kartika','3 orang','Berjalan','88%','Rp 12.000.000','28 Mei 2026'],
+      ['PRJ-019','Sales Funnel Automation','Internal XLifeWorks','Rina Marlina','4 orang','Berjalan','58%','Rp 26.000.000','09 Jul 2026'],
+      ['PRJ-020','Audit Security Rules Firebase','Internal XLifeWorks','Citra Ananda','3 orang','Selesai','100%','Rp 14.000.000','18 Mei 2026']
+    ];
+
+    function badgeByStatus(status) {
+      const s = String(status).toLowerCase();
+      if (s.includes('aktif') || s.includes('lunas') || s.includes('selesai') || s.includes('online')) return 'green';
+      if (s.includes('risiko') || s.includes('belum')) return 'red';
+      if (s.includes('meeting') || s.includes('berjalan')) return 'blue';
+      if (s.includes('izin') || s.includes('onboarding') || s.includes('trial') || s.includes('standby')) return 'orange';
+      return 'purple';
+    }
+
+    function renderDataTables() {
+      const row = (arr, statusIndex, moneyIndex) => '<tr>' + arr.map((v, i) => {
+        if (i === statusIndex) return `<td><span class="label ${badgeByStatus(v)}">${v}</span></td>`;
+        if (i === moneyIndex) return `<td class="money">${v}</td>`;
+        return `<td>${v}</td>`;
+      }).join('') + '</tr>';
+
+      const customersTable = document.getElementById('customersTable');
+      if (customersTable) customersTable.innerHTML = sampleCustomers.map(x => row(x, 6, 7)).join('');
+
+      const vendorsTable = document.getElementById('vendorsTable');
+      if (vendorsTable) vendorsTable.innerHTML = sampleVendors.map(x => row(x, 6, 7)).join('');
+
+      const employeesTable = document.getElementById('employeesTable');
+      if (employeesTable) employeesTable.innerHTML = sampleEmployees.map(x => row(x, 4, -1)).join('');
+
+      const projectsTable = document.getElementById('projectsTable');
+      if (projectsTable) projectsTable.innerHTML = sampleProjects.map(x => row(x, 5, 7)).join('');
+    }
+
+    renderDataTables();
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && localStream) {
