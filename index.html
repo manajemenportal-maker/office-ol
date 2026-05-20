@@ -716,6 +716,22 @@
       display: none;
     }
 
+    .camera-status {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      z-index: 3;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,.72);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .camera-status.ok { background: rgba(22,163,74,.86); }
+    .camera-status.warn { background: rgba(249,115,22,.9); }
+    .camera-status.off { background: rgba(100,116,139,.88); }
+
     .video-name {
       position: absolute;
       left: 12px;
@@ -1327,6 +1343,7 @@
                 <div class="video-grid">
                   <div class="video-tile main-speaker" id="localVideoTile">
                     <video id="localVideo" class="local-video" autoplay playsinline muted></video>
+                    <div class="camera-status off" id="cameraStatus">Kamera Off</div>
                     <div class="video-live">LIVE</div>
                     <div class="face video-placeholder">KS</div>
                     <div class="video-name">Kalimaya · Host</div>
@@ -1343,7 +1360,7 @@
                 <div class="meeting-controls">
                   <button class="control-btn active" id="micBtn" onclick="toggleMeetingControl('micBtn', 'Mic')">🎙️ Mic On</button>
                   <button class="control-btn" id="camBtn" onclick="toggleCamera()">📷 Nyalakan Kamera</button>
-                  <button class="control-btn" onclick="showToast('Mode share screen aktif. Nanti bisa dipakai untuk presentasi, dokumen, dan demo aplikasi.')">🖥️ Share Screen</button>
+                  <button class="control-btn" onclick="startScreenShare()">🖥️ Share Screen</button>
                   <button class="control-btn" onclick="showToast('Recording dimulai. Di versi database, hasil rekaman tersimpan di arsip meeting.')">⏺️ Record</button>
                   <button class="control-btn danger" onclick="showToast('Kamu keluar dari ruang meeting online.')">📞 Leave</button>
                 </div>
@@ -1383,6 +1400,10 @@
               <div class="meeting-feature">🖥️<b>Share Screen</b><span>Presentasi aplikasi, laporan, dokumen, atau dashboard.</span></div>
               <div class="meeting-feature">📝<b>Notulen</b><span>Catatan rapat, keputusan, dan action point tersimpan.</span></div>
               <div class="meeting-feature">🔗<b>Link Undangan</b><span>Undang peserta internal, klien, tenant, atau investor.</span></div>
+              <div class="meeting-feature">🟢<b>Mode Stabil</b><span>Kamera dibuat 640x360 agar lebih ringan untuk laptop dan HP.</span></div>
+              <div class="meeting-feature">🧠<b>SFU Ready</b><span>Untuk banyak peserta, meeting perlu engine WebRTC seperti Jitsi, Agora, atau Daily.</span></div>
+              <div class="meeting-feature">📡<b>Estimasi Kapasitas</b><span>Internal 10-25 orang aktif kamera; webinar bisa jauh lebih banyak.</span></div>
+              <div class="meeting-feature">🛠️<b>Anti Putus</b><span>Status kamera mendeteksi pause, putus, gagal izin, dan kamera dipakai aplikasi lain.</span></div>
             </div>
           </div>
 
@@ -1919,27 +1940,109 @@
       if (!localStream) {
         try {
           localStream = await navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true
+            video: {
+              width: { ideal: 640, max: 1280 },
+              height: { ideal: 360, max: 720 },
+              frameRate: { ideal: 24, max: 30 },
+              facingMode: 'user'
+            },
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+              autoGainControl: true
+            }
           });
           video.srcObject = localStream;
+          await video.play().catch(() => {});
+
+          localStream.getTracks().forEach(track => {
+            track.onended = () => handleCameraEnded('Kamera berhenti. Bisa karena izin browser dicabut, kamera dipakai aplikasi lain, atau perangkat masuk mode hemat daya.');
+            track.onmute = () => setCameraStatus('Kamera Pause', 'warn');
+            track.onunmute = () => setCameraStatus('Kamera Aktif', 'ok');
+          });
+
           tile.classList.add('camera-on');
           btn.classList.add('active');
           btn.textContent = '📷 Matikan Kamera';
-          showToast('Kamera aktif. Browser akan meminta izin kamera dan mikrofon.');
+          setCameraStatus('Kamera Aktif', 'ok');
+          showToast('Kamera aktif stabil. Untuk hasil terbaik gunakan HTTPS, Chrome/Edge terbaru, dan jangan buka kamera di aplikasi lain.');
         } catch (error) {
-          showToast('Kamera gagal dibuka. Pastikan izin kamera/mikrofon diizinkan dan halaman dibuka lewat HTTPS atau localhost.');
+          setCameraStatus('Kamera Gagal', 'warn');
+          showToast('Kamera gagal dibuka. Pastikan izin kamera/mikrofon diizinkan, halaman HTTPS/localhost, dan kamera tidak sedang dipakai Zoom/Teams/WhatsApp.');
         }
       } else {
-        localStream.getTracks().forEach(track => track.stop());
-        localStream = null;
-        video.srcObject = null;
-        tile.classList.remove('camera-on');
-        btn.classList.remove('active');
-        btn.textContent = '📷 Nyalakan Kamera';
-        showToast('Kamera dimatikan.');
+        stopCamera('Kamera dimatikan.');
       }
     }
+
+    function stopCamera(message = 'Kamera dimatikan.') {
+      const btn = document.getElementById('camBtn');
+      const video = document.getElementById('localVideo');
+      const tile = document.getElementById('localVideoTile');
+
+      if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+      }
+      localStream = null;
+      if (video) video.srcObject = null;
+      if (tile) tile.classList.remove('camera-on');
+      if (btn) {
+        btn.classList.remove('active');
+        btn.textContent = '📷 Nyalakan Kamera';
+      }
+      setCameraStatus('Kamera Off', 'off');
+      showToast(message);
+    }
+
+    function handleCameraEnded(message) {
+      localStream = null;
+      const video = document.getElementById('localVideo');
+      const tile = document.getElementById('localVideoTile');
+      const btn = document.getElementById('camBtn');
+      if (video) video.srcObject = null;
+      if (tile) tile.classList.remove('camera-on');
+      if (btn) {
+        btn.classList.remove('active');
+        btn.textContent = '📷 Nyalakan Kamera';
+      }
+      setCameraStatus('Kamera Terputus', 'warn');
+      showToast(message);
+    }
+
+    function setCameraStatus(text, mode) {
+      const status = document.getElementById('cameraStatus');
+      if (!status) return;
+      status.textContent = text;
+      status.classList.remove('ok', 'warn', 'off');
+      status.classList.add(mode || 'off');
+    }
+
+    async function startScreenShare() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+        showToast('Share screen belum didukung browser ini. Gunakan Chrome, Edge, atau Firefox terbaru.');
+        return;
+      }
+
+      try {
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({
+          video: true,
+          audio: false
+        });
+        showToast('Share screen aktif. Di versi meeting live, stream ini dikirim ke peserta lain melalui WebRTC/SFU.');
+        screenStream.getVideoTracks()[0].onended = () => showToast('Share screen dihentikan.');
+      } catch (error) {
+        showToast('Share screen dibatalkan atau tidak diizinkan.');
+      }
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && localStream) {
+        setCameraStatus('Kamera Pause', 'warn');
+      }
+      if (!document.hidden && localStream) {
+        setCameraStatus('Kamera Aktif', 'ok');
+      }
+    });
 
     function sendMeetingChat() {
       const input = document.getElementById('chatInput');
