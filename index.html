@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XLifeWorks Office Online</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    :root {
+      --bg: #eef4ff;
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --secondary: #06b6d4;
+      --green: #16a34a;
+      --orange: #f97316;
+      --red: #ef4444;
+      --purple: #7c3aed;
+      --dark: #0f172a;
+      --muted: #64748b;
+      --card: rgba(255, 255, 255, 0.88);
+      --border: rgba(148, 163, 184, 0.28);
+      --shadow: 0 22px 70px rgba(15, 23, 42, 0.12);
+      --radius: 24px;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.25), transparent 30%),
+        radial-gradient(circle at top right, rgba(6, 182, 212, 0.28), transparent 28%),
+        linear-gradient(135deg, #f8fbff 0%, #e8f1ff 48%, #eef7ff 100%);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      padding: 24px 18px;
+      background: rgba(15, 23, 42, 0.94);
+      color: white;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      box-shadow: 12px 0 40px rgba(15, 23, 42, 0.18);
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 21px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.45);
+    }
+
+    .brand h1 {
+      font-size: 19px;
+      line-height: 1.05;
+    }
+
+    .brand span {
+      display: block;
+      font-size: 11px;
+      color: #93c5fd;
+      margin-top: 4px;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .office-status {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.22), rgba(6, 182, 212, 0.14));
+      border: 1px solid rgba(147, 197, 253, 0.22);
+      border-radius: 22px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .office-status small {
+      color: #bfdbfe;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .office-status strong {
+      font-size: 25px;
+    }
+
+    .status-pill {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.18);
+      color: #86efac;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.14);
+    }
+
+    .nav-title {
+      color: #94a3b8;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 24px 12px 10px;
+    }
+
+    .nav button {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.25s ease;
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background: rgba(37, 99, 235, 0.2);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .nav-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .main {
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .page-title h2 {
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing: -1.5px;
+      margin-bottom: 6px;
+    }
+
+    .page-title p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .search {
+      min-width: 260px;
+      padding: 13px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      outline: 0;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 17px;
+      padding: 13px 16px;
+      font-weight: 800;
+      cursor: pointer;
+      background: white;
+      color: var(--dark);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      transition: 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: white;
+    }
+
+    .btn-orange {
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      color: white;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.96), rgba(6, 182, 212, 0.9));
+      border-radius: 34px;
+      padding: 28px;
+      color: white;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+      right: -130px;
+      top: -180px;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.35fr 0.9fr;
+      gap: 24px;
+      position: relative;
+      z-index: 2;
+      align-items: center;
+    }
+
+    .hero h3 {
+      font-size: clamp(26px, 4vw, 48px);
+      letter-spacing: -1.8px;
+      line-height: 1.02;
+      margin-bottom: 12px;
+      max-width: 780px;
+    }
+
+    .hero p {
+      color: #dbeafe;
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 780px;
+      margin-bottom: 20px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .building-card {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 28px;
+      padding: 18px;
+      backdrop-filter: blur(16px);
+    }
+
+    .building {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .window {
+      height: 46px;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.2);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .window.on {
+      background: rgba(255, 255, 255, 0.42);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(16px);
+    }
+
+    .span-3 { grid-column: span 3; }
+    .span-4 { grid-column: span 4; }
+    .span-5 { grid-column: span 5; }
+    .span-6 { grid-column: span 6; }
+    .span-7 { grid-column: span 7; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+
+    .stat-card {
+      min-height: 150px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      right: -42px;
+      bottom: -54px;
+      border-radius: 50%;
+      background: rgba(37, 99, 235, 0.12);
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 22px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    .stat-card h4 {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    .stat-card strong {
+      font-size: 34px;
+      letter-spacing: -1px;
+    }
+
+    .stat-card p {
+      color: var(--muted);
+      margin-top: 7px;
+      font-size: 13px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+
+    .section-head h3 {
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .section-head span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .room {
+      border-radius: 22px;
+      padding: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(239,246,255,.86));
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: .25s ease;
+      min-height: 142px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .room:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 38px rgba(37, 99, 235, 0.14);
+    }
+
+    .room .emoji {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .room h4 {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .room p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .room .badge {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: #dbeafe;
+      color: var(--primary-dark);
+    }
+
+    .task-list,
+    .activity-list,
+    .meeting-list,
+    .doc-list,
+    .staff-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .task,
+    .activity,
+    .meeting,
+    .doc,
+    .staff {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(248, 250, 252, 0.9);
+      border: 1px solid var(--border);
+    }
+
+    .check {
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
+      border-radius: 8px;
+      border: 2px solid #cbd5e1;
+      margin-top: 2px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .task.done .check {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+    }
+
+    .task.done .task-title {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .task-body,
+    .activity-body,
+    .meeting-body,
+    .doc-body,
+    .staff-body {
+      flex: 1;
+    }
+
+    .task-title,
+    .meeting-title,
+    .doc-title,
+    .staff-name {
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .task-meta,
+    .activity-meta,
+    .meeting-meta,
+    .doc-meta,
+    .staff-meta {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .label {
+      display: inline-flex;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      margin-left: 6px;
+    }
+
+    .label.blue { background: #dbeafe; color: #1d4ed8; }
+    .label.green { background: #dcfce7; color: #15803d; }
+    .label.orange { background: #ffedd5; color: #c2410c; }
+    .label.red { background: #fee2e2; color: #b91c1c; }
+    .label.purple { background: #ede9fe; color: #6d28d9; }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .progress-wrap {
+      height: 10px;
+      border-radius: 99px;
+      background: #e2e8f0;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      width: 68%;
+    }
+
+    .desk {
+      min-height: 420px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.88), rgba(239,246,255,0.88)),
+        repeating-linear-gradient(90deg, rgba(37,99,235,0.04) 0 1px, transparent 1px 80px);
+      border-radius: 30px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sticky-note {
+      background: #fef3c7;
+      color: #78350f;
+      padding: 16px;
+      border-radius: 16px;
+      transform: rotate(-1.4deg);
+      box-shadow: 0 10px 20px rgba(120, 53, 15, 0.12);
+    }
+
+    .calendar-mini {
+      background: #eff6ff;
+      border-radius: 18px;
+      padding: 14px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .calendar-mini strong {
+      display: block;
+      font-size: 34px;
+      color: var(--primary);
+      margin-top: 8px;
+    }
+
+    .desk-tools {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .tool {
+      padding: 15px;
+      border-radius: 18px;
+      background: white;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.05);
+      font-weight: 900;
+    }
+
+    .video-room {
+      display: grid;
+      grid-template-columns: 1.7fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .video-stage {
+      min-height: 430px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.34), transparent 34%),
+        linear-gradient(135deg, #0f172a, #1e293b);
+      padding: 18px;
+      color: white;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 20px 50px rgba(15,23,42,.18);
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .video-tile {
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.12);
+      min-height: 150px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-tile.main-speaker {
+      grid-column: span 2;
+      min-height: 190px;
+      background: linear-gradient(135deg, rgba(37,99,235,.55), rgba(6,182,212,.28));
+    }
+
+    .face {
+      width: 82px;
+      height: 82px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.18);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      font-weight: 900;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+    }
+
+    .local-video {
+      width: 100%;
+      height: 100%;
+      min-height: 190px;
+      object-fit: cover;
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      transform: scaleX(-1);
+    }
+
+    .video-placeholder {
+      position: relative;
+      z-index: 2;
+    }
+
+    .video-tile.camera-on .local-video {
+      display: block;
+    }
+
+    .video-tile.camera-on .video-placeholder {
+      display: none;
+    }
+
+    .video-name {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,.72);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .video-live {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(239,68,68,.86);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .meeting-controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .control-btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,.12);
+      color: white;
+      font-weight: 900;
+      transition: .25s ease;
+    }
+
+    .control-btn:hover,
+    .control-btn.active {
+      background: rgba(37,99,235,.7);
+      transform: translateY(-2px);
+    }
+
+    .control-btn.danger {
+      background: rgba(239,68,68,.9);
+    }
+
+    .meeting-side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .mini-panel {
+      border-radius: 24px;
+      padding: 16px;
+      background: rgba(248, 250, 252, 0.92);
+      border: 1px solid var(--border);
+    }
+
+    .chat-box {
+      display: grid;
+      gap: 10px;
+      max-height: 170px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .chat-msg {
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .chat-msg strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--primary-dark);
+    }
+
+    .meeting-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .meeting-feature {
+      border-radius: 20px;
+      padding: 16px;
+      background: white;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 26px rgba(15,23,42,.06);
+    }
+
+    .meeting-feature b {
+      display: block;
+      margin: 8px 0 4px;
+    }
+
+    .meeting-feature span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 980px) {
+      .video-room {
+        grid-template-columns: 1fr;
+      }
+
+      .meeting-feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .video-tile.main-speaker {
+        grid-column: span 1;
+      }
+
+      .meeting-feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.62);
+      z-index: 30;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      width: min(620px, 100%);
+      background: white;
+      border-radius: 30px;
+      padding: 24px;
+      box-shadow: 0 35px 100px rgba(15, 23, 42, 0.38);
+      animation: pop .25s ease;
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: scale(.96) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .modal h3 {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .modal p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .close {
+      border: 0;
+      background: #f1f5f9;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .input,
+    .textarea,
+    .select {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      outline: 0;
+      font-size: 14px;
+      background: #f8fafc;
+    }
+
+    .textarea {
+      resize: vertical;
+      min-height: 95px;
+    }
+
+    .mobile-bar {
+      display: none;
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 20;
+      background: rgba(15, 23, 42, 0.94);
+      border-radius: 24px;
+      padding: 8px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.28);
+    }
+
+    .mobile-bar button {
+      border: 0;
+      background: transparent;
+      color: #cbd5e1;
+      display: grid;
+      place-items: center;
+      gap: 3px;
+      font-size: 10px;
+      cursor: pointer;
+      padding: 8px 4px;
+      border-radius: 16px;
+    }
+
+    .mobile-bar button.active {
+      background: rgba(37, 99, 235, 0.32);
+      color: white;
+    }
+
+    .mobile-bar span {
+      font-size: 18px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #0f172a;
+      color: white;
+      padding: 14px 16px;
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25);
+      z-index: 50;
+      display: none;
+      max-width: 330px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1180px) {
+      .app {
+        grid-template-columns: 92px 1fr;
+      }
+
+      .sidebar {
+        padding: 18px 10px;
+      }
+
+      .brand h1,
+      .office-status,
+      .nav-title,
+      .nav button span.label-text {
+        display: none;
+      }
+
+      .brand {
+        justify-content: center;
+      }
+
+      .nav button {
+        justify-content: center;
+        padding: 12px;
+      }
+
+      .nav button:hover,
+      .nav button.active {
+        transform: none;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+
+      .span-3 { grid-column: span 6; }
+      .span-4 { grid-column: span 6; }
+      .span-5 { grid-column: span 12; }
+      .span-6 { grid-column: span 12; }
+      .span-7 { grid-column: span 12; }
+      .span-8 { grid-column: span 12; }
+      .room-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 760px) {
+      .app {
+        display: block;
+        padding-bottom: 88px;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 16px;
+      }
+
+      .topbar {
+        display: block;
+      }
+
+      .top-actions {
+        justify-content: stretch;
+        margin-top: 14px;
+      }
+
+      .search,
+      .btn {
+        width: 100%;
+      }
+
+      .hero {
+        border-radius: 28px;
+        padding: 22px;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .grid {
+        gap: 14px;
+      }
+
+      .span-3,
+      .span-4,
+      .span-5,
+      .span-6,
+      .span-7,
+      .span-8,
+      .span-12 {
+        grid-column: span 12;
+      }
+
+      .room-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .desk-tools {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-bar {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="toast" id="toast"></div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">XL</div>
+        <div>
+          <h1>XLifeWorks</h1>
+          <span>Office Online OS</span>
+        </div>
+      </div>
+
+      <div class="office-status">
+        <small>Jam Kantor Digital</small>
+        <strong id="clock">08:30</strong>
+        <div class="status-pill"><i class="dot"></i> Kantor Online Aktif</div>
+      </div>
+
+      <div class="nav-title">Kantor</div>
+      <nav class="nav" id="sideNav">
+        <button class="active" data-section="lobby"><span class="nav-icon">🏢</span><span class="label-text">Lobby Kantor</span></button>
+        <button data-section="desk"><span class="nav-icon">🖥️</span><span class="label-text">Meja Saya</span></button>
+        <button data-section="rooms"><span class="nav-icon">🚪</span><span class="label-text">Ruangan</span></button>
+        <button data-section="tasks"><span class="nav-icon">✅</span><span class="label-text">Tugas</span></button>
+        <button data-section="meetings"><span class="nav-icon">🎙️</span><span class="label-text">Meeting</span></button>
+        <button data-section="documents"><span class="nav-icon">📁</span><span class="label-text">Dokumen</span></button>
+        <button data-section="owner"><span class="nav-icon">📊</span><span class="label-text">Dashboard Owner</span></button>
+      </nav>
+
+      <div class="nav-title">Fitur Khusus</div>
+      <nav class="nav">
+        <button onclick="openModal('receptionist')"><span class="nav-icon">💁</span><span class="label-text">Resepsionis Digital</span></button>
+        <button onclick="openModal('idcard')"><span class="nav-icon">🪪</span><span class="label-text">ID Card Digital</span></button>
+        <button onclick="showToast('Pantry digital dibuka. Ruang santai untuk budaya kantor dan obrolan ringan tim.')"><span class="nav-icon">☕</span><span class="label-text">Pantry Digital</span></button>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="page-title">
+          <h2 id="pageTitle">Lobby Kantor</h2>
+          <p id="pageSubtitle">Selamat datang di kantor online yang terasa seperti kantor riil.</p>
+        </div>
+        <div class="top-actions">
+          <input class="search" id="searchInput" placeholder="Cari tugas, dokumen, meeting..." />
+          <button class="btn" onclick="openModal('newTask')">+ Tugas</button>
+          <button class="btn btn-primary" onclick="toggleAttendance()" id="attendanceBtn">Masuk Kantor</button>
+        </div>
+      </div>
+
+      <section id="lobby" class="page-section">
+        <div class="hero">
+          <div class="hero-content">
+            <div>
+              <h3>Kerja online, rasa masuk kantor beneran.</h3>
+              <p>XLifeWorks membuat perusahaan punya lobby, meja kerja, ruangan divisi, meeting, dokumen, absensi, approval, dan monitoring owner dalam satu aplikasi.</p>
+              <div class="hero-actions">
+                <button class="btn btn-green" onclick="toggleAttendance()">🚪 Masuk / Keluar Kantor</button>
+                <button class="btn" onclick="openModal('receptionist')">💁 Buka Resepsionis</button>
+                <button class="btn" onclick="goSection('rooms')">🚪 Masuk Ruangan</button>
+              </div>
+            </div>
+            <div class="building-card">
+              <strong>Gedung Kantor Digital</strong>
+              <p style="font-size:13px; margin:6px 0 0; color:#dbeafe;">12 ruangan aktif, 28 staf online, 6 meeting terjadwal.</p>
+              <div class="building">
+                <div class="window on">👔</div><div class="window on">💰</div><div class="window">📁</div><div class="window on">📣</div>
+                <div class="window">👥</div><div class="window on">🧾</div><div class="window on">✅</div><div class="window">☕</div>
+                <div class="window on">🎙️</div><div class="window">📦</div><div class="window on">💼</div><div class="window on">🖥️</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card stat-card span-3">
+            <div class="stat-top"><h4>Hadir Hari Ini</h4><div class="stat-icon">👥</div></div>
+            <strong>28</strong>
+            <p>4 izin, 2 belum absen</p>
+          </div>
+          <div class="card stat-card span-3">
+            <div class="stat-top"><h4>Tugas Aktif</h4><div class="stat-icon">✅</div></div>
+            <strong>74</strong>
+            <p>18 prioritas tinggi</p>
+          </div>
+          <div class="card stat-card span-3">
+            <div class="stat-top"><h4>Meeting Hari Ini</h4><div class="stat-icon">🎙️</div></div>
+            <strong>6</strong>
+            <p>2 menunggu notulen</p>
+          </div>
+          <div class="card stat-card span-3">
+            <div class="stat-top"><h4>Invoice Pending</h4><div class="stat-icon">🧾</div></div>
+            <strong>12</strong>
+            <p>Rp 48,7 juta belum dibayar</p>
+          </div>
+
+          <div class="card span-7">
+            <div class="section-head">
+              <div><h3>Agenda Lobby Hari Ini</h3><span>Pengumuman, meeting, dan aktivitas penting kantor</span></div>
+              <button class="btn" onclick="openModal('announcement')">+ Pengumuman</button>
+            </div>
+            <div class="activity-list">
+              <div class="activity"><div class="avatar">HR</div><div class="activity-body"><div class="task-title">Briefing pagi seluruh divisi <span class="label blue">09:00</span></div><div class="activity-meta">Ruang Meeting Utama · PIC: Manager Operasional</div></div></div>
+              <div class="activity"><div class="avatar">FN</div><div class="activity-body"><div class="task-title">Approval pembayaran vendor <span class="label orange">Urgent</span></div><div class="activity-meta">Finance membutuhkan persetujuan owner sebelum jam 14:00</div></div></div>
+              <div class="activity"><div class="avatar">SL</div><div class="activity-body"><div class="task-title">Follow up prospek corporate <span class="label green">Hot Lead</span></div><div class="activity-meta">Sales team menyiapkan proposal dan jadwal presentasi</div></div></div>
+              <div class="activity"><div class="avatar">PJ</div><div class="activity-body"><div class="task-title">Project aplikasi office online <span class="label purple">Progress 68%</span></div><div class="activity-meta">Desain UI sudah masuk tahap prototype interaktif</div></div></div>
+            </div>
+          </div>
+
+          <div class="card span-5">
+            <div class="section-head">
+              <div><h3>Staf Sedang Online</h3><span>Status karyawan di kantor digital</span></div>
+            </div>
+            <div class="staff-list">
+              <div class="staff"><div class="avatar">AS</div><div class="staff-body"><div class="staff-name">Andi Saputra <span class="label green">Online</span></div><div class="staff-meta">Finance · sedang review invoice</div></div></div>
+              <div class="staff"><div class="avatar">RM</div><div class="staff-body"><div class="staff-name">Rina Marlina <span class="label blue">Meeting</span></div><div class="staff-meta">Sales · ruang meeting 2</div></div></div>
+              <div class="staff"><div class="avatar">DP</div><div class="staff-body"><div class="staff-name">Dedi Pratama <span class="label orange">Istirahat</span></div><div class="staff-meta">Operasional · kembali 13:00</div></div></div>
+              <div class="staff"><div class="avatar">NS</div><div class="staff-body"><div class="staff-name">Nadia Sari <span class="label purple">Fokus</span></div><div class="staff-meta">Project · mengerjakan UI dashboard</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="desk" class="page-section hidden">
+        <div class="grid">
+          <div class="card span-8 desk">
+            <div class="section-head">
+              <div><h3>Meja Kerja Pribadi</h3><span>Semua pekerjaan kamu hari ini dalam satu meja digital</span></div>
+              <button class="btn btn-primary" onclick="openModal('newTask')">Tambah Catatan</button>
+            </div>
+            <div class="grid">
+              <div class="span-6 sticky-note">
+                <strong>Sticky Note Hari Ini</strong>
+                <p style="margin-top:8px; line-height:1.55;">Selesaikan prototype lobby kantor, rapihkan modul absensi, dan siapkan konsep paket penjualan.</p>
+              </div>
+              <div class="span-6 calendar-mini">
+                <span>Hari Kerja</span>
+                <strong>20</strong>
+                <small>Mei 2026 · Rabu</small>
+              </div>
+              <div class="span-12">
+                <div class="desk-tools">
+                  <div class="tool">📁 Dokumen Saya</div>
+                  <div class="tool">✅ Tugas Saya</div>
+                  <div class="tool">🎙️ Jadwal Meeting</div>
+                  <div class="tool">🔔 Reminder</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card span-4">
+            <div class="section-head"><div><h3>Target Harian</h3><span>Progress personal hari ini</span></div></div>
+            <strong style="font-size:38px;">68%</strong>
+            <div class="progress-wrap"><div class="progress-bar"></div></div>
+            <div class="task-list" style="margin-top:18px;">
+              <div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Briefing pagi</div><div class="task-meta">Selesai jam 09:20</div></div></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Review proposal klien</div><div class="task-meta">Deadline 15:00</div></div></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Update dokumen SOP</div><div class="task-meta">Prioritas sedang</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="rooms" class="page-section hidden">
+        <div class="card span-12">
+          <div class="section-head">
+            <div><h3>Ruangan Kantor Online</h3><span>Pilih ruangan seperti masuk kantor fisik</span></div>
+          </div>
+          <div class="room-grid">
+            <div class="room" onclick="openRoom('Ruang Direktur', 'Monitoring owner, approval penting, laporan perusahaan, dan keputusan strategis.')"><span class="badge">Owner</span><div class="emoji">👔</div><h4>Ruang Direktur</h4><p>Dashboard ringkas untuk pemilik bisnis dan pimpinan.</p></div>
+            <div class="room" onclick="openRoom('Ruang HRD', 'Absensi, izin, cuti, lembur, data karyawan, dan evaluasi staf.')"><span class="badge">HR</span><div class="emoji">👥</div><h4>Ruang HRD</h4><p>Kelola kehadiran, izin, cuti, dan data karyawan.</p></div>
+            <div class="room" onclick="openRoom('Ruang Finance', 'Kas masuk, kas keluar, invoice, tagihan, pembayaran, dan approval dana.')"><span class="badge">Finance</span><div class="emoji">💰</div><h4>Ruang Finance</h4><p>Invoice, tagihan, pembayaran, dan laporan keuangan.</p></div>
+            <div class="room" onclick="openRoom('Ruang Sales', 'Pipeline penjualan, data prospek, follow up, penawaran, dan closing report.')"><span class="badge">Sales</span><div class="emoji">📣</div><h4>Ruang Sales</h4><p>Prospek, pipeline, follow up, dan closing report.</p></div>
+            <div class="room" onclick="openRoom('Ruang Project', 'Board tugas, timeline pekerjaan, PIC, deadline, dan progress operasional.')"><span class="badge">Project</span><div class="emoji">✅</div><h4>Ruang Project</h4><p>Board tugas, timeline, PIC, dan progress pekerjaan.</p></div>
+            <div class="room" onclick="openRoom('Ruang Meeting', 'Jadwal meeting, link online, daftar hadir, notulen, dan action point.')"><span class="badge">Meeting</span><div class="emoji">🎙️</div><h4>Ruang Meeting</h4><p>Meeting online, notulen, daftar hadir, dan action point.</p></div>
+            <div class="room" onclick="openRoom('Ruang Arsip', 'Surat, kontrak, SOP, invoice, legal, dokumen project, dan folder perusahaan.')"><span class="badge">Arsip</span><div class="emoji">📁</div><h4>Ruang Arsip</h4><p>Dokumen perusahaan tersusun rapi dan mudah dicari.</p></div>
+            <div class="room" onclick="openRoom('Pantry Digital', 'Ruang santai, apresiasi karyawan, ucapan ulang tahun, dan budaya kantor.')"><span class="badge">Santai</span><div class="emoji">☕</div><h4>Pantry Digital</h4><p>Ruang santai agar kantor online tetap terasa manusiawi.</p></div>
+            <div class="room" onclick="openRoom('Resepsionis Digital', 'Menerima tamu, membuat janji temu, mencatat pesan, dan mengarahkan tamu ke divisi terkait.')"><span class="badge">Tamu</span><div class="emoji">💁</div><h4>Resepsionis</h4><p>Menerima tamu online, janji temu, dan pesan masuk.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tasks" class="page-section hidden">
+        <div class="grid">
+          <div class="card span-4">
+            <div class="section-head"><div><h3>To Do</h3><span>Tugas baru</span></div></div>
+            <div class="task-list">
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Buat template surat tugas</div><div class="task-meta">Admin · deadline besok</div></div></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Input 30 data prospek</div><div class="task-meta">Sales · prioritas sedang</div></div></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Cek kontrak tenant VO</div><div class="task-meta">Legal · prioritas tinggi</div></div></div>
+            </div>
+          </div>
+          <div class="card span-4">
+            <div class="section-head"><div><h3>On Progress</h3><span>Sedang dikerjakan</span></div></div>
+            <div class="task-list">
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Desain dashboard owner</div><div class="task-meta">UI Team · progress 68%</div></div></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Rumus laporan invoice</div><div class="task-meta">Finance · review sore</div></div></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">SOP absensi remote</div><div class="task-meta">HRD · butuh approval</div></div></div>
+            </div>
+          </div>
+          <div class="card span-4">
+            <div class="section-head"><div><h3>Selesai</h3><span>Tugas rampung</span></div></div>
+            <div class="task-list">
+              <div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Wireframe lobby digital</div><div class="task-meta">Selesai hari ini</div></div></div>
+              <div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Role akses awal</div><div class="task-meta">Super admin, owner, staff</div></div></div>
+              <div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Konsep ID card digital</div><div class="task-meta">Siap masuk prototype</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="meetings" class="page-section hidden">
+        <div class="grid">
+          <div class="card span-12">
+            <div class="section-head">
+              <div>
+                <h3>Meeting Online XLifeWorks</h3>
+                <span>Ruang meeting seperti Zoom / Microsoft Teams, tapi menyatu dengan kantor online.</span>
+              </div>
+              <button class="btn btn-primary" onclick="openModal('meeting')">+ Buat Meeting</button>
+            </div>
+
+            <div class="video-room">
+              <div class="video-stage">
+                <div class="video-grid">
+                  <div class="video-tile main-speaker" id="localVideoTile">
+                    <video id="localVideo" class="local-video" autoplay playsinline muted></video>
+                    <div class="video-live">LIVE</div>
+                    <div class="face video-placeholder">KS</div>
+                    <div class="video-name">Kalimaya · Host</div>
+                  </div>
+                  <div class="video-tile">
+                    <div class="face">RM</div>
+                    <div class="video-name">Rina · Sales</div>
+                  </div>
+                  <div class="video-tile">
+                    <div class="face">AS</div>
+                    <div class="video-name">Andi · Finance</div>
+                  </div>
+                </div>
+                <div class="meeting-controls">
+                  <button class="control-btn active" id="micBtn" onclick="toggleMeetingControl('micBtn', 'Mic')">🎙️ Mic On</button>
+                  <button class="control-btn" id="camBtn" onclick="toggleCamera()">📷 Nyalakan Kamera</button>
+                  <button class="control-btn" onclick="showToast('Mode share screen aktif. Nanti bisa dipakai untuk presentasi, dokumen, dan demo aplikasi.')">🖥️ Share Screen</button>
+                  <button class="control-btn" onclick="showToast('Recording dimulai. Di versi database, hasil rekaman tersimpan di arsip meeting.')">⏺️ Record</button>
+                  <button class="control-btn danger" onclick="showToast('Kamu keluar dari ruang meeting online.')">📞 Leave</button>
+                </div>
+              </div>
+
+              <div class="meeting-side">
+                <div class="mini-panel">
+                  <div class="section-head" style="margin-bottom:10px;">
+                    <div><h3 style="font-size:17px;">Peserta</h3><span>6 orang hadir</span></div>
+                  </div>
+                  <div class="staff-list">
+                    <div class="staff"><div class="avatar">KS</div><div class="staff-body"><div class="staff-name">Kalimaya <span class="label green">Host</span></div><div class="staff-meta">Mic aktif · kamera aktif</div></div></div>
+                    <div class="staff"><div class="avatar">RM</div><div class="staff-body"><div class="staff-name">Rina Marlina</div><div class="staff-meta">Sales · sedang presentasi</div></div></div>
+                    <div class="staff"><div class="avatar">AS</div><div class="staff-body"><div class="staff-name">Andi Saputra</div><div class="staff-meta">Finance · kamera aktif</div></div></div>
+                  </div>
+                </div>
+
+                <div class="mini-panel">
+                  <div class="section-head" style="margin-bottom:10px;">
+                    <div><h3 style="font-size:17px;">Chat Meeting</h3><span>Diskusi cepat</span></div>
+                  </div>
+                  <div class="chat-box" id="meetingChat">
+                    <div class="chat-msg"><strong>Rina</strong>Proposal corporate sudah saya upload di dokumen meeting.</div>
+                    <div class="chat-msg"><strong>Andi</strong>Untuk harga, finance setuju dengan skema tahunan.</div>
+                    <div class="chat-msg"><strong>Kalimaya</strong>Oke, lanjutkan ke simulasi penawaran.</div>
+                  </div>
+                  <div style="display:flex; gap:8px; margin-top:10px;">
+                    <input class="input" id="chatInput" placeholder="Ketik pesan..." style="padding:11px 12px;" />
+                    <button class="btn btn-primary" onclick="sendMeetingChat()">Kirim</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="meeting-feature-grid">
+              <div class="meeting-feature">🎙️<b>Audio & Video</b><span>Mic, kamera, mute, speaker view, dan grid peserta.</span></div>
+              <div class="meeting-feature">🖥️<b>Share Screen</b><span>Presentasi aplikasi, laporan, dokumen, atau dashboard.</span></div>
+              <div class="meeting-feature">📝<b>Notulen</b><span>Catatan rapat, keputusan, dan action point tersimpan.</span></div>
+              <div class="meeting-feature">🔗<b>Link Undangan</b><span>Undang peserta internal, klien, tenant, atau investor.</span></div>
+            </div>
+          </div>
+
+          <div class="card span-7">
+            <div class="section-head">
+              <div><h3>Jadwal Meeting</h3><span>Ruang meeting online dan notulen</span></div>
+              <button class="btn btn-primary" onclick="openModal('meeting')">+ Buat Meeting</button>
+            </div>
+            <div class="meeting-list">
+              <div class="meeting"><div class="avatar">09</div><div class="meeting-body"><div class="meeting-title">Briefing Pagi Operasional <span class="label blue">09:00</span></div><div class="meeting-meta">Peserta: Semua divisi · Ruang Meeting Utama · Link: xlifeworks.meet/briefing</div></div><button class="btn btn-green" onclick="goSection('meetings'); showToast('Kamu masuk ke Briefing Pagi Operasional.')">Join</button></div>
+              <div class="meeting"><div class="avatar">11</div><div class="meeting-body"><div class="meeting-title">Review Sales Pipeline <span class="label green">11:30</span></div><div class="meeting-meta">Peserta: Sales, Owner, Finance · Share screen aktif</div></div><button class="btn btn-green" onclick="showToast('Kamu masuk ke Review Sales Pipeline.')">Join</button></div>
+              <div class="meeting"><div class="avatar">15</div><div class="meeting-body"><div class="meeting-title">Presentasi Prototype XLifeWorks <span class="label purple">15:00</span></div><div class="meeting-meta">Peserta: Product Team dan calon investor · Recording ON</div></div><button class="btn btn-green" onclick="showToast('Kamu masuk ke Presentasi Prototype XLifeWorks.')">Join</button></div>
+            </div>
+          </div>
+          <div class="card span-5">
+            <div class="section-head"><div><h3>Notulen Terakhir</h3><span>Ringkasan hasil rapat</span></div></div>
+            <div class="activity-list">
+              <div class="activity"><div class="avatar">N1</div><div class="activity-body"><div class="task-title">Action Point</div><div class="activity-meta">1. Finalisasi lobby digital. 2. Tambah modul meeting online. 3. Siapkan paket harga.</div></div></div>
+              <div class="activity"><div class="avatar">N2</div><div class="activity-body"><div class="task-title">Keputusan</div><div class="activity-meta">Meeting online wajib terhubung ke dokumen, tugas, notulen, recording, dan dashboard owner.</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="documents" class="page-section hidden">
+        <div class="grid">
+          <div class="card span-12">
+            <div class="section-head">
+              <div><h3>Ruang Arsip Digital</h3><span>Dokumen kantor, surat, SOP, invoice, dan kontrak</span></div>
+              <button class="btn btn-primary" onclick="openModal('document')">+ Upload Dokumen</button>
+            </div>
+            <div class="doc-list">
+              <div class="doc"><div class="avatar">📄</div><div class="doc-body"><div class="doc-title">SOP Absensi Kantor Online <span class="label blue">SOP</span></div><div class="doc-meta">HRD · terakhir diperbarui hari ini · versi 1.2</div></div><button class="btn">Buka</button></div>
+              <div class="doc"><div class="avatar">🧾</div><div class="doc-body"><div class="doc-title">Invoice Tenant Virtual Office <span class="label orange">Finance</span></div><div class="doc-meta">Finance · 12 invoice menunggu pembayaran</div></div><button class="btn">Buka</button></div>
+              <div class="doc"><div class="avatar">📑</div><div class="doc-body"><div class="doc-title">Template Surat Penawaran <span class="label green">Sales</span></div><div class="doc-meta">Sales · siap digunakan untuk prospek baru</div></div><button class="btn">Buka</button></div>
+              <div class="doc"><div class="avatar">🔐</div><div class="doc-body"><div class="doc-title">Kontrak Kerja Digital <span class="label purple">Legal</span></div><div class="doc-meta">Legal · hanya owner dan HRD yang bisa membuka</div></div><button class="btn">Buka</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="owner" class="page-section hidden">
+        <div class="grid">
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Omzet Bulan Ini</h4><div class="stat-icon">💼</div></div><strong>128Jt</strong><p>Naik 18% dari bulan lalu</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Kas Keluar</h4><div class="stat-icon">💸</div></div><strong>43Jt</strong><p>5 pengeluaran butuh approval</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Project Aktif</h4><div class="stat-icon">📦</div></div><strong>9</strong><p>2 project melewati deadline</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Lead Panas</h4><div class="stat-icon">🔥</div></div><strong>17</strong><p>Potensi closing minggu ini</p></div>
+
+          <div class="card span-7">
+            <div class="section-head"><div><h3>Monitoring Owner</h3><span>Hal penting yang harus dilihat pimpinan</span></div></div>
+            <div class="activity-list">
+              <div class="activity"><div class="avatar">⚠️</div><div class="activity-body"><div class="task-title">2 project macet <span class="label red">Perlu tindakan</span></div><div class="activity-meta">Project A dan Project C belum update progress lebih dari 2 hari.</div></div></div>
+              <div class="activity"><div class="avatar">💰</div><div class="activity-body"><div class="task-title">Approval dana operasional <span class="label orange">Menunggu</span></div><div class="activity-meta">Pengajuan Rp 7.500.000 dari divisi operasional.</div></div></div>
+              <div class="activity"><div class="avatar">📈</div><div class="activity-body"><div class="task-title">Sales corporate naik <span class="label green">Bagus</span></div><div class="activity-meta">Pipeline bulan ini menunjukkan peluang kenaikan omzet.</div></div></div>
+            </div>
+          </div>
+
+          <div class="card span-5">
+            <div class="section-head"><div><h3>Approval Cepat</h3><span>Keputusan yang menunggu owner</span></div></div>
+            <div class="task-list">
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Pengajuan cuti Rina</div><div class="task-meta">2 hari · alasan keluarga</div></div><button class="btn btn-green" onclick="showToast('Pengajuan disetujui.')">Approve</button></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Pembelian software desain</div><div class="task-meta">Rp 1.250.000 · UI Team</div></div><button class="btn btn-green" onclick="showToast('Pembelian disetujui.')">Approve</button></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Diskon klien corporate</div><div class="task-meta">Diskon 15% · kontrak 1 tahun</div></div><button class="btn btn-green" onclick="showToast('Diskon disetujui.')">Approve</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="mobile-bar" id="mobileNav">
+    <button class="active" data-section="lobby"><span>🏢</span>Lobby</button>
+    <button data-section="desk"><span>🖥️</span>Meja</button>
+    <button data-section="rooms"><span>🚪</span>Ruang</button>
+    <button data-section="tasks"><span>✅</span>Tugas</button>
+    <button data-section="owner"><span>📊</span>Owner</button>
+  </nav>
+
+  <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-head">
+        <div>
+          <h3 id="modalTitle">Judul Modal</h3>
+          <p id="modalDesc">Deskripsi modal</p>
+        </div>
+        <button class="close" onclick="hideModal()">×</button>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const titles = {
+      lobby: ['Lobby Kantor', 'Selamat datang di kantor online yang terasa seperti kantor riil.'],
+      desk: ['Meja Saya', 'Pusat kerja pribadi untuk tugas, catatan, jadwal, dan reminder.'],
+      rooms: ['Ruangan Kantor', 'Masuk ke divisi dan ruangan seperti kantor fisik.'],
+      tasks: ['Board Tugas', 'Kelola pekerjaan tim dari to do, progress, sampai selesai.'],
+      meetings: ['Ruang Meeting', 'Jadwal rapat, link meeting, notulen, dan action point.'],
+      documents: ['Ruang Arsip', 'Simpan dokumen kantor, surat, SOP, invoice, dan kontrak.'],
+      owner: ['Dashboard Owner', 'Monitoring perusahaan dari sisi pimpinan dan pengambil keputusan.']
+    };
+
+    let isPresent = false;
+    let localStream = null;
+
+    function updateClock() {
+      const now = new Date();
+      const options = { hour: '2-digit', minute: '2-digit' };
+      document.getElementById('clock').textContent = now.toLocaleTimeString('id-ID', options);
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function goSection(section) {
+      document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+      document.getElementById(section).classList.remove('hidden');
+
+      document.querySelectorAll('[data-section]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.section === section);
+      });
+
+      document.getElementById('pageTitle').textContent = titles[section][0];
+      document.getElementById('pageSubtitle').textContent = titles[section][1];
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('[data-section]').forEach(btn => {
+      btn.addEventListener('click', () => goSection(btn.dataset.section));
+    });
+
+    function toggleAttendance() {
+      isPresent = !isPresent;
+      const btn = document.getElementById('attendanceBtn');
+      if (isPresent) {
+        btn.textContent = 'Keluar Kantor';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-orange');
+        showToast('Selamat datang. Kamu sudah masuk kantor online XLifeWorks.');
+      } else {
+        btn.textContent = 'Masuk Kantor';
+        btn.classList.remove('btn-orange');
+        btn.classList.add('btn-primary');
+        showToast('Kamu sudah keluar dari kantor online. Aktivitas hari ini tersimpan.');
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.display = 'block';
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
+
+    function hideModal() {
+      document.getElementById('modalBackdrop').style.display = 'none';
+    }
+
+    function closeModal(event) {
+      if (event.target.id === 'modalBackdrop') hideModal();
+    }
+
+    function openRoom(title, desc) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = desc;
+      document.getElementById('modalContent').innerHTML = `
+        <div class="form-grid">
+          <div class="activity">
+            <div class="avatar">🚪</div>
+            <div class="activity-body">
+              <div class="task-title">Status Ruangan</div>
+              <div class="activity-meta">Ruangan aktif. User dengan hak akses sesuai divisi dapat masuk, membuat aktivitas, dan melihat laporan.</div>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="showToast('Kamu masuk ke ${title}.'); hideModal();">Masuk Ruangan</button>
+        </div>
+      `;
+      document.getElementById('modalBackdrop').style.display = 'flex';
+    }
+
+    function openModal(type) {
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalContent = document.getElementById('modalContent');
+
+      if (type === 'receptionist') {
+        modalTitle.textContent = 'Resepsionis Digital';
+        modalDesc.textContent = 'Menerima tamu online, membuat janji temu, dan mengarahkan pesan ke divisi terkait.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Nama tamu / perusahaan" />
+            <input class="input" placeholder="Nomor WhatsApp / email" />
+            <select class="select">
+              <option>Tujuan: Direktur / Owner</option>
+              <option>Tujuan: Sales</option>
+              <option>Tujuan: Finance</option>
+              <option>Tujuan: HRD</option>
+              <option>Tujuan: Customer Support</option>
+            </select>
+            <textarea class="textarea" placeholder="Pesan tamu..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Pesan tamu berhasil diterima resepsionis digital.'); hideModal();">Terima Tamu</button>
+          </div>
+        `;
+      }
+
+      if (type === 'idcard') {
+        modalTitle.textContent = 'ID Card Digital';
+        modalDesc.textContent = 'Identitas karyawan online dengan status kerja dan hak akses.';
+        modalContent.innerHTML = `
+          <div style="background: linear-gradient(135deg, #2563eb, #06b6d4); color:white; border-radius:26px; padding:22px; box-shadow:0 20px 50px rgba(37,99,235,.25);">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div class="avatar" style="width:70px;height:70px;font-size:24px;background:rgba(255,255,255,.22);">KS</div>
+              <div>
+                <h3 style="margin:0;">Kalimaya Suryaalam</h3>
+                <p style="color:#dbeafe; margin-top:4px;">Owner / Founder</p>
+              </div>
+            </div>
+            <div style="display:grid; gap:10px; margin-top:18px; font-size:14px;">
+              <div>🏢 XLifeWorks Office Online</div>
+              <div>🟢 Status: Sedang berada di kantor online</div>
+              <div>🔐 Akses: Owner, Dashboard, Approval, Finance, Project</div>
+              <div>🕘 Jam Masuk: ${document.getElementById('clock').textContent}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (type === 'newTask') {
+        modalTitle.textContent = 'Tambah Tugas Baru';
+        modalDesc.textContent = 'Buat tugas untuk diri sendiri atau tim.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Judul tugas" />
+            <select class="select"><option>Prioritas tinggi</option><option>Prioritas sedang</option><option>Prioritas rendah</option></select>
+            <input class="input" type="date" />
+            <textarea class="textarea" placeholder="Detail tugas..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Tugas baru berhasil dibuat.'); hideModal();">Simpan Tugas</button>
+          </div>
+        `;
+      }
+
+      if (type === 'announcement') {
+        modalTitle.textContent = 'Buat Pengumuman Kantor';
+        modalDesc.textContent = 'Pengumuman akan tampil di lobby kantor online.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Judul pengumuman" />
+            <textarea class="textarea" placeholder="Isi pengumuman..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Pengumuman berhasil dipasang di lobby.'); hideModal();">Publikasikan</button>
+          </div>
+        `;
+      }
+
+      if (type === 'meeting') {
+        modalTitle.textContent = 'Buat Jadwal Meeting Online';
+        modalDesc.textContent = 'Atur ruang meeting seperti Zoom/Teams, lengkap dengan link undangan, recording, notulen, dan peserta.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Judul meeting" />
+            <input class="input" type="datetime-local" />
+            <input class="input" placeholder="Peserta / divisi / email tamu" />
+            <select class="select">
+              <option>Ruang Meeting Utama</option>
+              <option>Ruang Meeting Sales</option>
+              <option>Ruang Meeting Finance</option>
+              <option>Ruang Meeting Investor</option>
+              <option>Ruang Meeting Tenant Virtual Office</option>
+            </select>
+            <select class="select">
+              <option>Mode: Audio + Video</option>
+              <option>Mode: Audio saja</option>
+              <option>Mode: Webinar / presentasi</option>
+              <option>Mode: Private meeting</option>
+            </select>
+            <textarea class="textarea" placeholder="Agenda meeting..."></textarea>
+            <div class="activity">
+              <div class="avatar">🔗</div>
+              <div class="activity-body">
+                <div class="task-title">Link meeting otomatis</div>
+                <div class="activity-meta">Contoh: xlifeworks.meet/meeting-20260520-001</div>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('Meeting online berhasil dibuat. Link undangan, ruang video, chat, notulen, dan recording sudah disiapkan.'); hideModal();">Buat Meeting Online</button>
+          </div>
+        `;
+      }
+
+      if (type === 'document') {
+        modalTitle.textContent = 'Upload Dokumen';
+        modalDesc.textContent = 'Simpan dokumen ke ruang arsip digital.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Nama dokumen" />
+            <select class="select"><option>SOP</option><option>Invoice</option><option>Kontrak</option><option>Surat Penawaran</option><option>Legal</option></select>
+            <input class="input" type="file" />
+            <textarea class="textarea" placeholder="Catatan dokumen..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Dokumen berhasil disimpan ke arsip digital.'); hideModal();">Simpan Dokumen</button>
+          </div>
+        `;
+      }
+
+      document.getElementById('modalBackdrop').style.display = 'flex';
+    }
+
+    document.querySelectorAll('.check').forEach(check => {
+      check.addEventListener('click', () => {
+        const task = check.closest('.task');
+        task.classList.toggle('done');
+        check.textContent = task.classList.contains('done') ? '✓' : '';
+      });
+    });
+
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const q = this.value.toLowerCase().trim();
+      if (!q) return;
+      showToast('Fitur pencarian aktif: "' + q + '". Untuk versi database, nanti hasilnya bisa difilter real-time.');
+    });
+
+    function toggleMeetingControl(id, label) {
+      const btn = document.getElementById(id);
+      btn.classList.toggle('active');
+      const isOn = btn.classList.contains('active');
+      btn.textContent = id === 'micBtn'
+        ? (isOn ? '🎙️ Mic On' : '🔇 Mic Off')
+        : (isOn ? '📷 Kamera On' : '📷 Kamera Off');
+      showToast(label + (isOn ? ' dinyalakan.' : ' dimatikan.'));
+    }
+
+    async function toggleCamera() {
+      const btn = document.getElementById('camBtn');
+      const video = document.getElementById('localVideo');
+      const tile = document.getElementById('localVideoTile');
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        showToast('Browser ini belum mendukung akses kamera. Gunakan Chrome, Edge, Safari, atau Firefox terbaru.');
+        return;
+      }
+
+      if (!localStream) {
+        try {
+          localStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+          });
+          video.srcObject = localStream;
+          tile.classList.add('camera-on');
+          btn.classList.add('active');
+          btn.textContent = '📷 Matikan Kamera';
+          showToast('Kamera aktif. Browser akan meminta izin kamera dan mikrofon.');
+        } catch (error) {
+          showToast('Kamera gagal dibuka. Pastikan izin kamera/mikrofon diizinkan dan halaman dibuka lewat HTTPS atau localhost.');
+        }
+      } else {
+        localStream.getTracks().forEach(track => track.stop());
+        localStream = null;
+        video.srcObject = null;
+        tile.classList.remove('camera-on');
+        btn.classList.remove('active');
+        btn.textContent = '📷 Nyalakan Kamera';
+        showToast('Kamera dimatikan.');
+      }
+    }
+
+    function sendMeetingChat() {
+      const input = document.getElementById('chatInput');
+      const chat = document.getElementById('meetingChat');
+      const text = input.value.trim();
+      if (!text) return;
+      const div = document.createElement('div');
+      div.className = 'chat-msg';
+      div.innerHTML = '<strong>Kamu</strong>' + text;
+      chat.appendChild(div);
+      input.value = '';
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+</body>
+</html>
