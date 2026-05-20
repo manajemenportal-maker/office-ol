@@ -493,6 +493,106 @@
       white-space: nowrap;
     }
 
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .pricing-card {
+      background: linear-gradient(135deg, #ffffff, #f8fbff);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 38px rgba(15,23,42,.07);
+      transition: .25s ease;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 55px rgba(37,99,235,.14);
+    }
+
+    .pricing-card.featured {
+      border: 2px solid rgba(37,99,235,.45);
+      background: linear-gradient(135deg, rgba(239,246,255,.98), #ffffff);
+    }
+
+    .pricing-badge {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      color: #1d4ed8;
+      background: #dbeafe;
+      margin-bottom: 14px;
+    }
+
+    .pricing-card h4 {
+      font-size: 21px;
+      margin-bottom: 6px;
+      letter-spacing: -.5px;
+    }
+
+    .pricing-card .price {
+      font-size: 34px;
+      font-weight: 950;
+      letter-spacing: -1.2px;
+      margin: 12px 0 4px;
+      color: var(--primary-dark);
+    }
+
+    .pricing-card .price small {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .pricing-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 9px;
+      margin: 16px 0;
+      font-size: 13px;
+      color: #334155;
+    }
+
+    .feature-list div {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      line-height: 1.4;
+    }
+
+    .pricing-note {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 20px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1180px) {
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 760px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+
     .room-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1663,18 +1763,120 @@
       <section id="subscriptions" class="page-section hidden">
         <div class="grid">
           <div class="card span-12">
-            <div class="section-head"><div><h3>Paket Jualan XLifeWorks</h3><span>Kelola harga, billing, pelanggan, trial, dan status langganan</span></div><button class="btn btn-primary" onclick="openModal('package')">+ Paket</button></div>
-            <div class="room-grid">
-              <div class="room"><span class="badge">Starter</span><div class="emoji">🚀</div><h4>Starter</h4><p>5 user, lobby, absensi, tugas, meeting, dokumen. Cocok usaha kecil.</p></div>
-              <div class="room"><span class="badge">Best Seller</span><div class="emoji">💼</div><h4>Business</h4><p>25 user, HRD, Finance, Sales, Approval, dan dashboard owner.</p></div>
-              <div class="room"><span class="badge">Corporate</span><div class="emoji">🏢</div><h4>Corporate</h4><p>Multi cabang, custom branding, migrasi data, integrasi, dan support prioritas.</p></div>
-              <div class="room"><span class="badge">VO</span><div class="emoji">📬</div><h4>Virtual Office</h4><p>Tenant, surat masuk, booking meeting room, kontrak, dan tagihan VO.</p></div>
-              <div class="room"><span class="badge">Setup</span><div class="emoji">🧩</div><h4>Onboarding</h4><p>Setup awal, input data perusahaan, training admin, dan migrasi dokumen.</p></div>
-              <div class="room"><span class="badge">Add-on</span><div class="emoji">🔌</div><h4>Integrasi</h4><p>WhatsApp, email domain sendiri, payment gateway, dan Google Calendar.</p></div>
+            <div class="section-head">
+              <div>
+                <h3>Paket Jualan XLifeWorks</h3>
+                <span>Harga SaaS per user/bulan, mulai Rp 50.000 sampai paket enterprise.</span>
+              </div>
+              <button class="btn btn-primary" onclick="openModal('package')">+ Paket Custom</button>
+            </div>
+
+            <div class="pricing-grid">
+              <div class="pricing-card">
+                <span class="pricing-badge">Entry</span>
+                <h4>Starter</h4>
+                <p>Untuk UMKM, kantor kecil, bengkel, jasa, dan tim baru yang mulai tertib digital.</p>
+                <div class="price">Rp 50.000 <small>/user/bulan</small></div>
+                <div class="feature-list">
+                  <div>✅ Minimal 5 user</div>
+                  <div>✅ Lobby kantor online</div>
+                  <div>✅ Absensi masuk/pulang</div>
+                  <div>✅ Meja kerja pribadi</div>
+                  <div>✅ Board tugas dasar</div>
+                  <div>✅ Dokumen dasar</div>
+                  <div>✅ Meeting internal kecil</div>
+                </div>
+                <button class="btn btn-primary" onclick="showToast('Paket Starter dipilih: Rp 50.000/user/bulan, minimal 5 user.')">Pilih Starter</button>
+              </div>
+
+              <div class="pricing-card featured">
+                <span class="pricing-badge">Best Seller</span>
+                <h4>Business</h4>
+                <p>Untuk perusahaan berjalan yang butuh HRD, Finance, Sales, Approval, dan laporan owner.</p>
+                <div class="price">Rp 85.000 <small>/user/bulan</small></div>
+                <div class="feature-list">
+                  <div>✅ Minimal 10 user</div>
+                  <div>✅ Semua fitur Starter</div>
+                  <div>✅ HRD & data karyawan</div>
+                  <div>✅ Finance, invoice, kas</div>
+                  <div>✅ Sales / CRM pipeline</div>
+                  <div>✅ Approval center</div>
+                  <div>✅ Dashboard owner</div>
+                  <div>✅ Support prioritas normal</div>
+                </div>
+                <button class="btn btn-green" onclick="showToast('Paket Business dipilih: Rp 85.000/user/bulan, paket paling cocok untuk jualan utama.')">Pilih Business</button>
+              </div>
+
+              <div class="pricing-card">
+                <span class="pricing-badge">Advanced</span>
+                <h4>Professional</h4>
+                <p>Untuk perusahaan multi-divisi yang butuh integrasi, migrasi, meeting lebih kuat, dan kontrol role.</p>
+                <div class="price">Rp 125.000 <small>/user/bulan</small></div>
+                <div class="feature-list">
+                  <div>✅ Minimal 20 user</div>
+                  <div>✅ Semua fitur Business</div>
+                  <div>✅ Customer & vendor database</div>
+                  <div>✅ Project database lengkap</div>
+                  <div>✅ Migrasi Excel / CSV</div>
+                  <div>✅ Role akses lanjutan</div>
+                  <div>✅ Meeting sampai 25 kamera aktif</div>
+                  <div>✅ Integrasi WhatsApp/email</div>
+                </div>
+                <button class="btn btn-primary" onclick="showToast('Paket Professional dipilih: Rp 125.000/user/bulan untuk perusahaan multi-divisi.')">Pilih Professional</button>
+              </div>
+
+              <div class="pricing-card">
+                <span class="pricing-badge">Enterprise</span>
+                <h4>Corporate</h4>
+                <p>Untuk perusahaan besar, multi-cabang, virtual office, dan pelanggan yang butuh custom sistem.</p>
+                <div class="price">Rp 175.000 <small>/user/bulan</small></div>
+                <div class="feature-list">
+                  <div>✅ Minimal 50 user</div>
+                  <div>✅ Semua fitur Professional</div>
+                  <div>✅ Multi cabang / multi company</div>
+                  <div>✅ Custom branding / white label</div>
+                  <div>✅ Migrasi Trello, Asana, Odoo</div>
+                  <div>✅ Meeting corporate / SFU ready</div>
+                  <div>✅ API & integrasi payment</div>
+                  <div>✅ SLA & support prioritas</div>
+                </div>
+                <button class="btn btn-primary" onclick="showToast('Paket Corporate dipilih: Rp 175.000/user/bulan, minimal 50 user.')">Pilih Corporate</button>
+              </div>
+            </div>
+
+            <div class="pricing-note">
+              <strong>Catatan penjualan:</strong> harga di atas belum termasuk biaya setup awal, migrasi data besar, custom fitur, server meeting skala besar, payment gateway, dan white label khusus. Untuk kontrak tahunan bisa diberi diskon 10–20% agar pelanggan lebih cepat closing.
             </div>
           </div>
-          <div class="card span-7"><div class="section-head"><div><h3>Pelanggan Aktif</h3><span>Status langganan aplikasi</span></div></div><div class="doc-list"><div class="doc"><div class="avatar">🏢</div><div class="doc-body"><div class="doc-title">PT Alpha Digital <span class="label green">Aktif</span></div><div class="doc-meta">Business · 25 user · renewal 20 Juni 2026</div></div><button class="btn">Invoice</button></div><div class="doc"><div class="avatar">📬</div><div class="doc-body"><div class="doc-title">Tenant VO Jakarta <span class="label blue">Trial</span></div><div class="doc-meta">Virtual Office · 14 hari trial</div></div><button class="btn">Follow Up</button></div></div></div>
-          <div class="card span-5"><div class="section-head"><div><h3>Checklist Jualan</h3><span>Siap ditawarkan ke market</span></div></div><div class="task-list"><div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Firebase terkoneksi</div><div class="task-meta">Project office-ol aktif</div></div></div><div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Rules keamanan disiapkan</div><div class="task-meta">Firestore dan Storage rules</div></div></div><div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Aktifkan Auth Login</div><div class="task-meta">Email/password atau Google login</div></div></div></div></div>
+
+          <div class="card span-7">
+            <div class="section-head"><div><h3>Add-on & Biaya Tambahan</h3><span>Untuk menaikkan nilai transaksi per pelanggan</span></div></div>
+            <div class="data-table-wrap">
+              <table class="data-table" style="min-width:760px;">
+                <thead><tr><th>Add-on</th><th>Kegunaan</th><th>Harga Rekomendasi</th><th>Model</th></tr></thead>
+                <tbody>
+                  <tr><td>Setup & Onboarding</td><td>Setup perusahaan, role, menu, dan training admin</td><td class="money">Rp 1.500.000 - Rp 7.500.000</td><td>Sekali bayar</td></tr>
+                  <tr><td>Migrasi Data Ringan</td><td>Import Excel/CSV customer, karyawan, invoice, project</td><td class="money">Rp 1.000.000 - Rp 5.000.000</td><td>Sekali bayar</td></tr>
+                  <tr><td>Migrasi Data Besar</td><td>Migrasi dari Odoo, Trello, Asana, aplikasi lama</td><td class="money">Rp 7.500.000 - Rp 25.000.000</td><td>Per project</td></tr>
+                  <tr><td>White Label</td><td>Logo, warna, domain, dan identitas pelanggan</td><td class="money">Rp 10.000.000+</td><td>Sekali bayar</td></tr>
+                  <tr><td>Meeting Server Besar</td><td>Meeting/webinar skala besar dengan SFU/provider</td><td class="money">Custom</td><td>Bulanan</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card span-5">
+            <div class="section-head"><div><h3>Simulasi Cepat</h3><span>Contoh nilai tagihan per bulan</span></div></div>
+            <div class="task-list">
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Starter 5 user</div><div class="task-meta">5 × Rp 50.000 = <b>Rp 250.000/bulan</b></div></div></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Business 25 user</div><div class="task-meta">25 × Rp 85.000 = <b>Rp 2.125.000/bulan</b></div></div></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Professional 40 user</div><div class="task-meta">40 × Rp 125.000 = <b>Rp 5.000.000/bulan</b></div></div></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Corporate 100 user</div><div class="task-meta">100 × Rp 175.000 = <b>Rp 17.500.000/bulan</b></div></div></div>
+            </div>
+          </div>
+
+          <div class="card span-7"><div class="section-head"><div><h3>Pelanggan Aktif</h3><span>Status langganan aplikasi</span></div></div><div class="doc-list"><div class="doc"><div class="avatar">🏢</div><div class="doc-body"><div class="doc-title">PT Alpha Digital <span class="label green">Aktif</span></div><div class="doc-meta">Business · 25 user · Rp 2.125.000/bulan · renewal 20 Juni 2026</div></div><button class="btn">Invoice</button></div><div class="doc"><div class="avatar">📬</div><div class="doc-body"><div class="doc-title">Tenant VO Jakarta <span class="label blue">Trial</span></div><div class="doc-meta">Professional · 20 user · trial 14 hari</div></div><button class="btn">Follow Up</button></div></div></div>
+          <div class="card span-5"><div class="section-head"><div><h3>Checklist Jualan</h3><span>Siap ditawarkan ke market</span></div></div><div class="task-list"><div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Harga per user sudah dibuat</div><div class="task-meta">Mulai Rp 50.000/user/bulan</div></div></div><div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Paket bertingkat siap dijual</div><div class="task-meta">Starter, Business, Professional, Corporate</div></div></div><div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Aktifkan Auth Login</div><div class="task-meta">Email/password atau Google login</div></div></div></div></div>
         </div>
       </section>
 
@@ -2004,14 +2206,21 @@
 
       if (type === 'package') {
         modalTitle.textContent = 'Kelola Paket Jualan';
-        modalDesc.textContent = 'Atur paket, harga, jumlah user, fitur aktif, dan masa langganan.';
+        modalDesc.textContent = 'Atur paket per user/bulan, minimal user, fitur aktif, dan masa kontrak.';
         modalContent.innerHTML = `
           <div class="form-grid">
-            <input class="input" placeholder="Nama paket" />
-            <input class="input" placeholder="Harga bulanan / tahunan" />
-            <input class="input" placeholder="Jumlah user" />
-            <textarea class="textarea" placeholder="Fitur yang termasuk dalam paket..."></textarea>
-            <button class="btn btn-primary" onclick="showToast('Paket jualan berhasil disimpan.'); hideModal();">Simpan Paket</button>
+            <select class="select">
+              <option>Starter - Rp 50.000/user/bulan</option>
+              <option>Business - Rp 85.000/user/bulan</option>
+              <option>Professional - Rp 125.000/user/bulan</option>
+              <option>Corporate - Rp 175.000/user/bulan</option>
+              <option>Custom Enterprise - Harga negosiasi</option>
+            </select>
+            <input class="input" placeholder="Minimal user, contoh: 10 user" />
+            <input class="input" placeholder="Diskon tahunan, contoh: 15%" />
+            <input class="input" placeholder="Biaya setup, contoh: Rp 2.500.000" />
+            <textarea class="textarea" placeholder="Fitur yang termasuk dalam paket, SLA, support, dan catatan kontrak..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Paket jualan per user berhasil disimpan.'); hideModal();">Simpan Paket</button>
           </div>
         `;
       }
