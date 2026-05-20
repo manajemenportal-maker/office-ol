@@ -1117,6 +1117,12 @@
         <button data-section="tasks"><span class="nav-icon">✅</span><span class="label-text">Tugas</span></button>
         <button data-section="meetings"><span class="nav-icon">🎙️</span><span class="label-text">Meeting</span></button>
         <button data-section="documents"><span class="nav-icon">📁</span><span class="label-text">Dokumen</span></button>
+        <button data-section="hrd"><span class="nav-icon">👥</span><span class="label-text">HRD</span></button>
+        <button data-section="finance"><span class="nav-icon">💰</span><span class="label-text">Finance</span></button>
+        <button data-section="sales"><span class="nav-icon">📣</span><span class="label-text">Sales / CRM</span></button>
+        <button data-section="approvals"><span class="nav-icon">✅</span><span class="label-text">Approval</span></button>
+        <button data-section="subscriptions"><span class="nav-icon">💎</span><span class="label-text">Paket & Billing</span></button>
+        <button data-section="settings"><span class="nav-icon">⚙️</span><span class="label-text">Pengaturan</span></button>
         <button data-section="owner"><span class="nav-icon">📊</span><span class="label-text">Dashboard Owner</span></button>
       </nav>
 
@@ -1125,6 +1131,8 @@
         <button onclick="openModal('receptionist')"><span class="nav-icon">💁</span><span class="label-text">Resepsionis Digital</span></button>
         <button onclick="openModal('idcard')"><span class="nav-icon">🪪</span><span class="label-text">ID Card Digital</span></button>
         <button onclick="showToast('Pantry digital dibuka. Ruang santai untuk budaya kantor dan obrolan ringan tim.')"><span class="nav-icon">☕</span><span class="label-text">Pantry Digital</span></button>
+        <button onclick="openModal('support')"><span class="nav-icon">🛟</span><span class="label-text">Customer Support</span></button>
+        <button onclick="openModal('migration')"><span class="nav-icon">🔄</span><span class="label-text">Migrasi Data</span></button>
       </nav>
     </aside>
 
@@ -1146,7 +1154,7 @@
           <div class="hero-content">
             <div>
               <h3>Kerja online, rasa masuk kantor beneran.</h3>
-              <p>XLifeWorks membuat perusahaan punya lobby, meja kerja, ruangan divisi, meeting, dokumen, absensi, approval, dan monitoring owner dalam satu aplikasi.</p>
+              <p>XLifeWorks adalah aplikasi kantor online siap pakai untuk perusahaan, virtual office, tim remote, dan bisnis multi-cabang: lobby, meja kerja, ruangan divisi, meeting, dokumen, absensi, approval, finance, sales, HRD, dan monitoring owner dalam satu sistem.</p>
               <div class="hero-actions">
                 <button class="btn btn-green" onclick="toggleAttendance()">🚪 Masuk / Keluar Kantor</button>
                 <button class="btn" onclick="openModal('receptionist')">💁 Buka Resepsionis</button>
@@ -1196,7 +1204,7 @@
               <div class="activity"><div class="avatar">HR</div><div class="activity-body"><div class="task-title">Briefing pagi seluruh divisi <span class="label blue">09:00</span></div><div class="activity-meta">Ruang Meeting Utama · PIC: Manager Operasional</div></div></div>
               <div class="activity"><div class="avatar">FN</div><div class="activity-body"><div class="task-title">Approval pembayaran vendor <span class="label orange">Urgent</span></div><div class="activity-meta">Finance membutuhkan persetujuan owner sebelum jam 14:00</div></div></div>
               <div class="activity"><div class="avatar">SL</div><div class="activity-body"><div class="task-title">Follow up prospek corporate <span class="label green">Hot Lead</span></div><div class="activity-meta">Sales team menyiapkan proposal dan jadwal presentasi</div></div></div>
-              <div class="activity"><div class="avatar">PJ</div><div class="activity-body"><div class="task-title">Project aplikasi office online <span class="label purple">Progress 68%</span></div><div class="activity-meta">Desain UI sudah masuk tahap prototype interaktif</div></div></div>
+              <div class="activity"><div class="avatar">PJ</div><div class="activity-body"><div class="task-title">Project aplikasi office online <span class="label purple">Progress 68%</span></div><div class="activity-meta">Produk sudah terkoneksi Firebase dan siap dipasarkan sebagai aplikasi kantor online</div></div></div>
             </div>
           </div>
 
@@ -1233,10 +1241,10 @@
               </div>
               <div class="span-12">
                 <div class="desk-tools">
-                  <div class="tool">📁 Dokumen Saya</div>
-                  <div class="tool">✅ Tugas Saya</div>
-                  <div class="tool">🎙️ Jadwal Meeting</div>
-                  <div class="tool">🔔 Reminder</div>
+                  <div class="tool" onclick="goSection('documents')">📁 Dokumen Saya</div>
+                  <div class="tool" onclick="goSection('tasks')">✅ Tugas Saya</div>
+                  <div class="tool" onclick="goSection('meetings')">🎙️ Jadwal Meeting</div>
+                  <div class="tool" onclick="goSection('approvals')">🔔 Approval & Reminder</div>
                 </div>
               </div>
             </div>
@@ -1392,7 +1400,7 @@
           <div class="card span-5">
             <div class="section-head"><div><h3>Notulen Terakhir</h3><span>Ringkasan hasil rapat</span></div></div>
             <div class="activity-list">
-              <div class="activity"><div class="avatar">N1</div><div class="activity-body"><div class="task-title">Action Point</div><div class="activity-meta">1. Finalisasi lobby digital. 2. Tambah modul meeting online. 3. Siapkan paket harga.</div></div></div>
+              <div class="activity"><div class="avatar">N1</div><div class="activity-body"><div class="task-title">Action Point</div><div class="activity-meta">1. Follow up calon pelanggan. 2. Kirim penawaran paket Business. 3. Siapkan onboarding dan migrasi data.</div></div></div>
               <div class="activity"><div class="avatar">N2</div><div class="activity-body"><div class="task-title">Keputusan</div><div class="activity-meta">Meeting online wajib terhubung ke dokumen, tugas, notulen, recording, dan dashboard owner.</div></div></div>
             </div>
           </div>
@@ -1413,6 +1421,108 @@
               <div class="doc"><div class="avatar">🔐</div><div class="doc-body"><div class="doc-title">Kontrak Kerja Digital <span class="label purple">Legal</span></div><div class="doc-meta">Legal · hanya owner dan HRD yang bisa membuka</div></div><button class="btn">Buka</button></div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section id="hrd" class="page-section hidden">
+        <div class="grid">
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Total Karyawan</h4><div class="stat-icon">👥</div></div><strong>34</strong><p>28 aktif hari ini</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Izin / Cuti</h4><div class="stat-icon">📝</div></div><strong>6</strong><p>3 menunggu approval</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Terlambat</h4><div class="stat-icon">⏰</div></div><strong>2</strong><p>Perlu catatan HRD</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Evaluasi</h4><div class="stat-icon">⭐</div></div><strong>12</strong><p>Review performa bulan ini</p></div>
+          <div class="card span-7">
+            <div class="section-head"><div><h3>Data Karyawan</h3><span>Kelola user internal dan status kerja</span></div><button class="btn btn-primary" onclick="openModal('employee')">+ Karyawan</button></div>
+            <div class="staff-list">
+              <div class="staff"><div class="avatar">AS</div><div class="staff-body"><div class="staff-name">Andi Saputra <span class="label green">Aktif</span></div><div class="staff-meta">Finance · full time · hadir 08:02</div></div><button class="btn">Detail</button></div>
+              <div class="staff"><div class="avatar">RM</div><div class="staff-body"><div class="staff-name">Rina Marlina <span class="label blue">Sales</span></div><div class="staff-meta">Sales · target bulan ini 74%</div></div><button class="btn">Detail</button></div>
+              <div class="staff"><div class="avatar">DP</div><div class="staff-body"><div class="staff-name">Dedi Pratama <span class="label orange">Izin</span></div><div class="staff-meta">Operasional · izin setengah hari</div></div><button class="btn">Detail</button></div>
+            </div>
+          </div>
+          <div class="card span-5">
+            <div class="section-head"><div><h3>Pengajuan HR</h3><span>Cuti, izin, lembur, dan koreksi absen</span></div></div>
+            <div class="task-list">
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Cuti Rina Marlina</div><div class="task-meta">2 hari · alasan keluarga</div></div><button class="btn btn-green" onclick="showToast('Pengajuan cuti disetujui.')">Approve</button></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Lembur Tim Project</div><div class="task-meta">4 orang · malam ini</div></div><button class="btn btn-green" onclick="showToast('Lembur disetujui.')">Approve</button></div>
+              <div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Koreksi absen Andi</div><div class="task-meta">Lupa checkout kemarin</div></div><button class="btn btn-green" onclick="showToast('Koreksi absen disimpan.')">Approve</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="finance" class="page-section hidden">
+        <div class="grid">
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Kas Masuk</h4><div class="stat-icon">📥</div></div><strong>128Jt</strong><p>Bulan berjalan</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Kas Keluar</h4><div class="stat-icon">📤</div></div><strong>43Jt</strong><p>Operasional dan vendor</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Invoice Open</h4><div class="stat-icon">🧾</div></div><strong>18</strong><p>12 belum dibayar</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Profit Estimasi</h4><div class="stat-icon">📈</div></div><strong>85Jt</strong><p>Margin sehat</p></div>
+          <div class="card span-7">
+            <div class="section-head"><div><h3>Invoice & Tagihan</h3><span>Untuk pelanggan aplikasi dan tenant virtual office</span></div><button class="btn btn-primary" onclick="openModal('invoice')">+ Invoice</button></div>
+            <div class="doc-list">
+              <div class="doc"><div class="avatar">🧾</div><div class="doc-body"><div class="doc-title">INV-XL-00021 · PT Maju Bersama <span class="label orange">Belum Bayar</span></div><div class="doc-meta">Rp 3.500.000 · jatuh tempo 25 Mei 2026</div></div><button class="btn">Kirim WA</button></div>
+              <div class="doc"><div class="avatar">🧾</div><div class="doc-body"><div class="doc-title">INV-XL-00022 · CV Sinar Teknik <span class="label green">Lunas</span></div><div class="doc-meta">Rp 1.500.000 · paket Business</div></div><button class="btn">PDF</button></div>
+              <div class="doc"><div class="avatar">🧾</div><div class="doc-body"><div class="doc-title">INV-XL-00023 · Tenant VO A <span class="label blue">Terkirim</span></div><div class="doc-meta">Rp 750.000 · sewa alamat virtual office</div></div><button class="btn">Reminder</button></div>
+            </div>
+          </div>
+          <div class="card span-5">
+            <div class="section-head"><div><h3>Kas Cepat</h3><span>Catatan pemasukan dan pengeluaran</span></div></div>
+            <div class="activity-list">
+              <div class="activity"><div class="avatar">+</div><div class="activity-body"><div class="task-title">Pembayaran Paket Corporate</div><div class="activity-meta">Rp 12.000.000 · transfer bank</div></div></div>
+              <div class="activity"><div class="avatar">-</div><div class="activity-body"><div class="task-title">Biaya Server dan Domain</div><div class="activity-meta">Rp 950.000 · operasional aplikasi</div></div></div>
+              <div class="activity"><div class="avatar">+</div><div class="activity-body"><div class="task-title">Setup Fee Klien Baru</div><div class="activity-meta">Rp 2.500.000 · onboarding</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sales" class="page-section hidden">
+        <div class="grid">
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Lead Baru</h4><div class="stat-icon">🔥</div></div><strong>42</strong><p>Dari website dan WhatsApp</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Demo Terjadwal</h4><div class="stat-icon">🎙️</div></div><strong>11</strong><p>Minggu ini</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Closing</h4><div class="stat-icon">🤝</div></div><strong>8</strong><p>Pelanggan baru</p></div>
+          <div class="card stat-card span-3"><div class="stat-top"><h4>Pipeline</h4><div class="stat-icon">💼</div></div><strong>247Jt</strong><p>Potensi kontrak</p></div>
+          <div class="card span-4"><div class="section-head"><div><h3>Prospek Baru</h3><span>Masuk dari iklan, WA, referral</span></div></div><div class="task-list"><div class="task"><div class="check"></div><div class="task-body"><div class="task-title">PT Maju Bersama</div><div class="task-meta">Minat paket Corporate · butuh demo</div></div></div><div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Bengkel AC Prima</div><div class="task-meta">Butuh office online + billing</div></div></div></div></div>
+          <div class="card span-4"><div class="section-head"><div><h3>Follow Up</h3><span>Harus dikejar sales</span></div></div><div class="task-list"><div class="task"><div class="check"></div><div class="task-body"><div class="task-title">CV Sinar Teknik</div><div class="task-meta">Minta penawaran tahunan</div></div></div><div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Konsultan Pajak A</div><div class="task-meta">Tanya migrasi dari Trello</div></div></div></div></div>
+          <div class="card span-4"><div class="section-head"><div><h3>Deal / Closing</h3><span>Siap onboarding</span></div><button class="btn btn-primary" onclick="openModal('package')">Paket</button></div><div class="task-list"><div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Tenant VO Jakarta</div><div class="task-meta">Paket Virtual Office</div></div></div><div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">PT Alpha Digital</div><div class="task-meta">Paket Business 25 user</div></div></div></div></div>
+        </div>
+      </section>
+
+      <section id="approvals" class="page-section hidden">
+        <div class="grid">
+          <div class="card span-12">
+            <div class="section-head"><div><h3>Approval Center</h3><span>Semua persetujuan penting masuk ke satu pintu</span></div><button class="btn btn-primary" onclick="openModal('approval')">+ Pengajuan</button></div>
+            <div class="doc-list">
+              <div class="doc"><div class="avatar">💰</div><div class="doc-body"><div class="doc-title">Pengajuan Dana Operasional <span class="label orange">Menunggu Owner</span></div><div class="doc-meta">Rp 7.500.000 · dibuat Finance · alasan pembelian alat kerja</div></div><button class="btn btn-green" onclick="showToast('Pengajuan dana disetujui.')">Approve</button></div>
+              <div class="doc"><div class="avatar">🏷️</div><div class="doc-body"><div class="doc-title">Diskon 15% Klien Corporate <span class="label blue">Review</span></div><div class="doc-meta">Sales meminta diskon untuk kontrak 12 bulan</div></div><button class="btn btn-green" onclick="showToast('Diskon disetujui.')">Approve</button></div>
+              <div class="doc"><div class="avatar">📄</div><div class="doc-body"><div class="doc-title">Approval Kontrak Kerja <span class="label purple">Legal</span></div><div class="doc-meta">Kontrak karyawan baru perlu tanda tangan digital</div></div><button class="btn btn-green" onclick="showToast('Kontrak disetujui.')">Approve</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="subscriptions" class="page-section hidden">
+        <div class="grid">
+          <div class="card span-12">
+            <div class="section-head"><div><h3>Paket Jualan XLifeWorks</h3><span>Kelola harga, billing, pelanggan, trial, dan status langganan</span></div><button class="btn btn-primary" onclick="openModal('package')">+ Paket</button></div>
+            <div class="room-grid">
+              <div class="room"><span class="badge">Starter</span><div class="emoji">🚀</div><h4>Starter</h4><p>5 user, lobby, absensi, tugas, meeting, dokumen. Cocok usaha kecil.</p></div>
+              <div class="room"><span class="badge">Best Seller</span><div class="emoji">💼</div><h4>Business</h4><p>25 user, HRD, Finance, Sales, Approval, dan dashboard owner.</p></div>
+              <div class="room"><span class="badge">Corporate</span><div class="emoji">🏢</div><h4>Corporate</h4><p>Multi cabang, custom branding, migrasi data, integrasi, dan support prioritas.</p></div>
+              <div class="room"><span class="badge">VO</span><div class="emoji">📬</div><h4>Virtual Office</h4><p>Tenant, surat masuk, booking meeting room, kontrak, dan tagihan VO.</p></div>
+              <div class="room"><span class="badge">Setup</span><div class="emoji">🧩</div><h4>Onboarding</h4><p>Setup awal, input data perusahaan, training admin, dan migrasi dokumen.</p></div>
+              <div class="room"><span class="badge">Add-on</span><div class="emoji">🔌</div><h4>Integrasi</h4><p>WhatsApp, email domain sendiri, payment gateway, dan Google Calendar.</p></div>
+            </div>
+          </div>
+          <div class="card span-7"><div class="section-head"><div><h3>Pelanggan Aktif</h3><span>Status langganan aplikasi</span></div></div><div class="doc-list"><div class="doc"><div class="avatar">🏢</div><div class="doc-body"><div class="doc-title">PT Alpha Digital <span class="label green">Aktif</span></div><div class="doc-meta">Business · 25 user · renewal 20 Juni 2026</div></div><button class="btn">Invoice</button></div><div class="doc"><div class="avatar">📬</div><div class="doc-body"><div class="doc-title">Tenant VO Jakarta <span class="label blue">Trial</span></div><div class="doc-meta">Virtual Office · 14 hari trial</div></div><button class="btn">Follow Up</button></div></div></div>
+          <div class="card span-5"><div class="section-head"><div><h3>Checklist Jualan</h3><span>Siap ditawarkan ke market</span></div></div><div class="task-list"><div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Firebase terkoneksi</div><div class="task-meta">Project office-ol aktif</div></div></div><div class="task done"><div class="check">✓</div><div class="task-body"><div class="task-title">Rules keamanan disiapkan</div><div class="task-meta">Firestore dan Storage rules</div></div></div><div class="task"><div class="check"></div><div class="task-body"><div class="task-title">Aktifkan Auth Login</div><div class="task-meta">Email/password atau Google login</div></div></div></div></div>
+        </div>
+      </section>
+
+      <section id="settings" class="page-section hidden">
+        <div class="grid">
+          <div class="card span-6"><div class="section-head"><div><h3>Branding Perusahaan</h3><span>Untuk white label pelanggan</span></div></div><div class="form-grid"><input class="input" value="XLifeWorks Office Online" /><input class="input" value="www.xlifeworks.web.id" /><input class="input" placeholder="Upload logo perusahaan" type="file" /><button class="btn btn-primary" onclick="showToast('Branding perusahaan disimpan.')">Simpan Branding</button></div></div>
+          <div class="card span-6"><div class="section-head"><div><h3>Role & Hak Akses</h3><span>Atur menu berdasarkan jabatan</span></div></div><div class="doc-list"><div class="doc"><div class="avatar">👔</div><div class="doc-body"><div class="doc-title">Owner / Super Admin</div><div class="doc-meta">Akses semua menu dan approval final</div></div><button class="btn">Atur</button></div><div class="doc"><div class="avatar">👥</div><div class="doc-body"><div class="doc-title">HRD, Finance, Sales, Project</div><div class="doc-meta">Akses sesuai divisi dan tanggung jawab</div></div><button class="btn">Atur</button></div></div></div>
+          <div class="card span-6"><div class="section-head"><div><h3>Integrasi</h3><span>Hubungkan aplikasi dengan alat bisnis</span></div></div><div class="room-grid" style="grid-template-columns:repeat(2,1fr);"><div class="room"><span class="badge">WA</span><div class="emoji">💬</div><h4>WhatsApp</h4><p>Kirim invoice, reminder, dan follow up.</p></div><div class="room"><span class="badge">Email</span><div class="emoji">✉️</div><h4>Email Domain</h4><p>Surat keluar dan notifikasi resmi.</p></div><div class="room"><span class="badge">Pay</span><div class="emoji">💳</div><h4>Payment</h4><p>Payment gateway dan status lunas.</p></div><div class="room"><span class="badge">Calendar</span><div class="emoji">📅</div><h4>Calendar</h4><p>Sinkron meeting dan deadline.</p></div></div></div>
+          <div class="card span-6"><div class="section-head"><div><h3>Migrasi Data</h3><span>Ambil pelanggan dari aplikasi lain</span></div><button class="btn btn-primary" onclick="openModal('migration')">Mulai Migrasi</button></div><div class="activity-list"><div class="activity"><div class="avatar">T</div><div class="activity-body"><div class="task-title">Trello / Asana / ClickUp</div><div class="activity-meta">Import board, task, member, deadline, dan komentar.</div></div></div><div class="activity"><div class="avatar">O</div><div class="activity-body"><div class="task-title">Odoo / ERP Lama</div><div class="activity-meta">Import pelanggan, invoice, produk, user, dan dokumen.</div></div></div><div class="activity"><div class="avatar">X</div><div class="activity-body"><div class="task-title">Excel / CSV</div><div class="activity-meta">Import cepat data pelanggan, karyawan, dan invoice.</div></div></div></div></div>
         </div>
       </section>
 
@@ -1474,6 +1584,12 @@
       tasks: ['Board Tugas', 'Kelola pekerjaan tim dari to do, progress, sampai selesai.'],
       meetings: ['Ruang Meeting', 'Jadwal rapat, link meeting, notulen, dan action point.'],
       documents: ['Ruang Arsip', 'Simpan dokumen kantor, surat, SOP, invoice, dan kontrak.'],
+      hrd: ['HRD', 'Absensi, data karyawan, izin, cuti, lembur, dan evaluasi tim.'],
+      finance: ['Finance', 'Invoice, kas masuk, kas keluar, tagihan, dan laporan keuangan.'],
+      sales: ['Sales / CRM', 'Kelola prospek, pipeline, follow up, penawaran, dan pelanggan.'],
+      approvals: ['Approval Center', 'Pusat persetujuan cuti, dana, invoice, diskon, dan dokumen.'],
+      subscriptions: ['Paket & Billing', 'Kelola paket aplikasi, langganan pelanggan, invoice SaaS, dan status pembayaran.'],
+      settings: ['Pengaturan Bisnis', 'Branding, user, role akses, cabang, integrasi, dan konfigurasi aplikasi.'],
       owner: ['Dashboard Owner', 'Monitoring perusahaan dari sisi pimpinan dan pengambil keputusan.']
     };
 
@@ -1679,6 +1795,90 @@
         `;
       }
 
+      if (type === 'employee') {
+        modalTitle.textContent = 'Tambah Karyawan';
+        modalDesc.textContent = 'Daftarkan user internal dan tentukan role akses.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Nama lengkap" />
+            <input class="input" placeholder="Email login" />
+            <select class="select"><option>Role: Staff</option><option>Role: Manager</option><option>Role: HRD</option><option>Role: Finance</option><option>Role: Sales</option><option>Role: Owner</option></select>
+            <input class="input" placeholder="Divisi / Jabatan" />
+            <button class="btn btn-primary" onclick="showToast('Karyawan baru siap dibuat di Firebase Auth dan koleksi users.'); hideModal();">Simpan Karyawan</button>
+          </div>
+        `;
+      }
+
+      if (type === 'invoice') {
+        modalTitle.textContent = 'Buat Invoice';
+        modalDesc.textContent = 'Buat tagihan pelanggan aplikasi, tenant virtual office, atau project.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Nama pelanggan / perusahaan" />
+            <input class="input" placeholder="Nominal tagihan" />
+            <select class="select"><option>Paket Business</option><option>Paket Corporate</option><option>Paket Virtual Office</option><option>Setup Fee</option><option>Custom Project</option></select>
+            <input class="input" type="date" />
+            <textarea class="textarea" placeholder="Catatan invoice..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Invoice dibuat dan siap dikirim via WhatsApp/email.'); hideModal();">Buat Invoice</button>
+          </div>
+        `;
+      }
+
+      if (type === 'approval') {
+        modalTitle.textContent = 'Buat Pengajuan Approval';
+        modalDesc.textContent = 'Ajukan dana, cuti, diskon, dokumen, pembelian, atau keputusan penting.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <select class="select"><option>Pengajuan Dana</option><option>Pengajuan Cuti</option><option>Approval Diskon</option><option>Approval Dokumen</option><option>Pembelian Barang</option></select>
+            <input class="input" placeholder="Judul pengajuan" />
+            <input class="input" placeholder="Nominal jika ada" />
+            <textarea class="textarea" placeholder="Alasan / detail pengajuan..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Pengajuan masuk ke Approval Center.'); hideModal();">Kirim Pengajuan</button>
+          </div>
+        `;
+      }
+
+      if (type === 'package') {
+        modalTitle.textContent = 'Kelola Paket Jualan';
+        modalDesc.textContent = 'Atur paket, harga, jumlah user, fitur aktif, dan masa langganan.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Nama paket" />
+            <input class="input" placeholder="Harga bulanan / tahunan" />
+            <input class="input" placeholder="Jumlah user" />
+            <textarea class="textarea" placeholder="Fitur yang termasuk dalam paket..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Paket jualan berhasil disimpan.'); hideModal();">Simpan Paket</button>
+          </div>
+        `;
+      }
+
+      if (type === 'support') {
+        modalTitle.textContent = 'Customer Support';
+        modalDesc.textContent = 'Pusat bantuan pelanggan aplikasi XLifeWorks.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <input class="input" placeholder="Nama pelanggan" />
+            <select class="select"><option>Kendala Login</option><option>Billing / Pembayaran</option><option>Meeting Online</option><option>Migrasi Data</option><option>Permintaan Fitur</option></select>
+            <textarea class="textarea" placeholder="Keluhan / kebutuhan pelanggan..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Tiket support dibuat dan masuk ke tim bantuan.'); hideModal();">Buat Tiket</button>
+          </div>
+        `;
+      }
+
+      if (type === 'migration') {
+        modalTitle.textContent = 'Migrasi Data Pelanggan';
+        modalDesc.textContent = 'Bantu pelanggan pindah dari aplikasi lama ke XLifeWorks.';
+        modalContent.innerHTML = `
+          <div class="form-grid">
+            <select class="select"><option>Dari Excel / CSV</option><option>Dari Trello</option><option>Dari Asana</option><option>Dari Odoo</option><option>Dari Aplikasi Lain</option></select>
+            <input class="input" placeholder="Nama perusahaan pelanggan" />
+            <input class="input" type="file" />
+            <textarea class="textarea" placeholder="Data yang ingin dimigrasikan: user, task, pelanggan, invoice, dokumen..."></textarea>
+            <button class="btn btn-primary" onclick="showToast('Permintaan migrasi data dibuat. Tim onboarding bisa memproses file pelanggan.'); hideModal();">Mulai Migrasi</button>
+          </div>
+        `;
+      }
+
       document.getElementById('modalBackdrop').style.display = 'flex';
     }
 
@@ -1753,6 +1953,47 @@
       input.value = '';
       chat.scrollTop = chat.scrollHeight;
     }
+  </script>
+
+  <!-- Firebase Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCaM3WMTCdzl3VSzNPuTgYbx8Kj1a98y-Q",
+      authDomain: "office-ol.firebaseapp.com",
+      projectId: "office-ol",
+      storageBucket: "office-ol.firebasestorage.app",
+      messagingSenderId: "206422691367",
+      appId: "1:206422691367:web:b2a134b60af00c6a6b0802",
+      measurementId: "G-1MJK1Y1Y6P"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    let analytics = null;
+
+    isSupported()
+      .then((supported) => {
+        if (supported) {
+          analytics = getAnalytics(app);
+          console.log("Firebase Analytics aktif untuk XLifeWorks Office Online.");
+          if (typeof showToast === "function") {
+            showToast("Firebase berhasil terhubung ke project office-ol.");
+          }
+        } else {
+          console.log("Firebase Analytics tidak didukung di browser/perangkat ini.");
+        }
+      })
+      .catch((error) => {
+        console.warn("Firebase Analytics gagal dijalankan:", error);
+      });
+
+    window.xlifeFirebase = {
+      app,
+      analytics,
+      config: firebaseConfig
+    };
   </script>
 </body>
 </html>
